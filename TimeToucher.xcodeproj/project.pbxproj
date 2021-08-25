@@ -112,15 +112,23 @@
 		17675A8826D6D57F00B5CC4A /* TimeToucherExamples */ = {
 			isa = PBXGroup;
 			children = (
-				17675A8926D6D57F00B5CC4A /* AppDelegate.swift */,
-				17675A8B26D6D57F00B5CC4A /* SceneDelegate.swift */,
+				17C71A6A26D6E36B00136CA3 /* SupFiles */,
 				17675A8D26D6D57F00B5CC4A /* ViewController.swift */,
-				17675A8F26D6D57F00B5CC4A /* Main.storyboard */,
-				17675A9226D6D58000B5CC4A /* Assets.xcassets */,
-				17675A9426D6D58000B5CC4A /* LaunchScreen.storyboard */,
 				17675A9726D6D58000B5CC4A /* Info.plist */,
 			);
 			path = TimeToucherExamples;
+			sourceTree = "<group>";
+		};
+		17C71A6A26D6E36B00136CA3 /* SupFiles */ = {
+			isa = PBXGroup;
+			children = (
+				17675A9426D6D58000B5CC4A /* LaunchScreen.storyboard */,
+				17675A9226D6D58000B5CC4A /* Assets.xcassets */,
+				17675A8F26D6D57F00B5CC4A /* Main.storyboard */,
+				17675A8926D6D57F00B5CC4A /* AppDelegate.swift */,
+				17675A8B26D6D57F00B5CC4A /* SceneDelegate.swift */,
+			);
+			path = SupFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
