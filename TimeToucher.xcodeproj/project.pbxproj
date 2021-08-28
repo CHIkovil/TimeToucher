@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1713ED8D26D796BB00770017 /* TimeToucher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1713ED8C26D796BB00770017 /* TimeToucher.swift */; };
+		1713ED8F26D79BEB00770017 /* ATimeToucher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1713ED8E26D79BEB00770017 /* ATimeToucher.swift */; };
+		1766BABD26D982090074291E /* STimeToucher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1766BABC26D982090074291E /* STimeToucher.swift */; };
 		17675A7326D6D55000B5CC4A /* TimeToucher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17675A6926D6D55000B5CC4A /* TimeToucher.framework */; };
 		17675A7826D6D55000B5CC4A /* TimeToucherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17675A7726D6D55000B5CC4A /* TimeToucherTests.swift */; };
 		17675A7A26D6D55000B5CC4A /* TimeToucher.h in Headers */ = {isa = PBXBuildFile; fileRef = 17675A6C26D6D55000B5CC4A /* TimeToucher.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -28,6 +31,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1713ED8C26D796BB00770017 /* TimeToucher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToucher.swift; sourceTree = "<group>"; };
+		1713ED8E26D79BEB00770017 /* ATimeToucher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATimeToucher.swift; sourceTree = "<group>"; };
+		1766BABC26D982090074291E /* STimeToucher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = STimeToucher.swift; sourceTree = "<group>"; };
 		17675A6926D6D55000B5CC4A /* TimeToucher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TimeToucher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		17675A6C26D6D55000B5CC4A /* TimeToucher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeToucher.h; sourceTree = "<group>"; };
 		17675A6D26D6D55000B5CC4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -76,6 +82,7 @@
 				17675A7626D6D55000B5CC4A /* TimeToucherTests */,
 				17675A8826D6D57F00B5CC4A /* TimeToucherExamples */,
 				17675A6A26D6D55000B5CC4A /* Products */,
+				17FD596026D95DE000B67EDE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -92,8 +99,11 @@
 		17675A6B26D6D55000B5CC4A /* TimeToucher */ = {
 			isa = PBXGroup;
 			children = (
+				1766BABC26D982090074291E /* STimeToucher.swift */,
+				1713ED8E26D79BEB00770017 /* ATimeToucher.swift */,
 				17675A6C26D6D55000B5CC4A /* TimeToucher.h */,
 				17675A6D26D6D55000B5CC4A /* Info.plist */,
+				1713ED8C26D796BB00770017 /* TimeToucher.swift */,
 			);
 			path = TimeToucher;
 			sourceTree = "<group>";
@@ -126,6 +136,13 @@
 				17675A8B26D6D57F00B5CC4A /* SceneDelegate.swift */,
 			);
 			path = SupFiles;
+			sourceTree = "<group>";
+		};
+		17FD596026D95DE000B67EDE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,6 +223,7 @@
 				TargetAttributes = {
 					17675A6826D6D55000B5CC4A = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
 					};
 					17675A7126D6D55000B5CC4A = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -266,6 +284,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1766BABD26D982090074291E /* STimeToucher.swift in Sources */,
+				1713ED8D26D796BB00770017 /* TimeToucher.swift in Sources */,
+				1713ED8F26D79BEB00770017 /* ATimeToucher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +455,7 @@
 		17675A7E26D6D55000B5CC4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -450,6 +472,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -458,6 +481,7 @@
 		17675A7F26D6D55000B5CC4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -482,6 +506,7 @@
 		17675A8126D6D55000B5CC4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TimeToucherTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -499,6 +524,7 @@
 		17675A8226D6D55000B5CC4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TimeToucherTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
