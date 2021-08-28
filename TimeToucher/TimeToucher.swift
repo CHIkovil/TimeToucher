@@ -49,7 +49,16 @@ public final class TimeToucher: UIView {
         timeLayer.strokeColor  = arc.color.cgColor
         timeLayer.lineWidth = arc.lineWidth
         timeLayer.fillColor = UIColor.clear.cgColor
-   
+        timeLayer.position = CGPoint(x: frame.size.width/2, y: frame.size.height/2)
+        timeLayer.bounds = self.layer.bounds
+        
+        let animation = CABasicAnimation(keyPath: "transform.rotation")
+        animation.byValue = NSNumber(floatLiteral: Double(CGFloat.pi * 2))
+        animation.duration = arc.animateDuration
+        animation.repeatCount = .infinity
+        
+        timeLayer.add(animation, forKey: nil)
+        
         self.layer.addSublayer(backgroundLayer)
         self.layer.addSublayer(timeLayer)
     }
@@ -62,12 +71,6 @@ public extension TimeToucher {
         for arc in arcsArray{
             addLayer(arc: arc)
         }
-        
-        let animation = CABasicAnimation(keyPath: "transform.rotation")
-        animation.byValue = NSNumber(floatLiteral: Double(CGFloat.pi * 2))
-        animation.duration = 10
-        animation.repeatCount = .infinity
-        self.layer.add(animation, forKey: nil)
     }
 }
 
