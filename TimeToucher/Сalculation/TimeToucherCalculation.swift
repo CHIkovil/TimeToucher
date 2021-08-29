@@ -19,6 +19,9 @@ internal class TimeToucherCalculation {
         return [twoTangencyPoint.0, twoTangencyPoint.1]
     }
     
+    static func checkCircleContainsPoint(point: CGPoint, circleCenter: CGPoint, circleRadius: CGFloat) -> Bool{
+        return sqrt(pow(point.x - circleCenter.x, 2) + pow(point.y - circleCenter.y, 2)) < circleRadius
+    }
 
 }
 

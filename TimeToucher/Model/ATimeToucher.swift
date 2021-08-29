@@ -9,12 +9,11 @@ import Foundation
 import UIKit
 
 public struct ATimeToucher{
-    let percentage: CGFloat
-    let lineWidth: CGFloat
-    let radius: CGFloat
-    let startDegree: CGFloat
-    let color: UIColor
-    let backgroundColor: UIColor
-    let animationDuration: Double
-    let animationLine: LTimeToucher
+    public var percentage: CGFloat
+    public var lineWidth: CGFloat
+    public var radius: CGFloat
+    public var startDegree: CGFloat
+    public var color: UIColor
+    public var backgroundColor: UIColor
+    public var animationDuration: Double
 }
