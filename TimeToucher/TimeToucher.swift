@@ -36,9 +36,11 @@ private extension TimeToucher {
             return setup.directory
             
         default:
-            let secondArc = ATimeToucher(percentage: 40, lineWidth: 20, radius: 50, startDegree: 0, color: .random, backgroundColor: .lightGray, animateDuration: 10)
-            let minuteArc = ATimeToucher(percentage: 40, lineWidth: 30, radius: 100, startDegree: 70, color: .random, backgroundColor: .lightGray,  animateDuration: 20)
-            let hourArc = ATimeToucher(percentage: 40, lineWidth: 50, radius: 150, startDegree: 180, color: .random,backgroundColor: .lightGray,  animateDuration: 30)
+            let animationLineSetup = LTimeToucher(countAnimation: 10)
+            
+            let secondArc = ATimeToucher(percentage: 40, lineWidth: 20, radius: 50, startDegree: 0, color: .random, backgroundColor: .lightGray, animationDuration: 10, animationLine: animationLineSetup)
+            let minuteArc = ATimeToucher(percentage: 40, lineWidth: 30, radius: 100, startDegree: 70, color: .random, backgroundColor: .lightGray,  animationDuration: 20, animationLine: animationLineSetup)
+            let hourArc = ATimeToucher(percentage: 40, lineWidth: 50, radius: 150, startDegree: 180, color: .random,backgroundColor: .lightGray,  animationDuration: 30, animationLine: animationLineSetup)
             
             return ASTimeToucher(secondArc: secondArc, minuteArc: minuteArc, hourArc: hourArc).directory
         }

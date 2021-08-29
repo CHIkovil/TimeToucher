@@ -15,5 +15,6 @@ public struct ATimeToucher{
     let startDegree: CGFloat
     let color: UIColor
     let backgroundColor: UIColor
-    let animateDuration: Double
+    let animationDuration: Double
+    let animationLine: LTimeToucher
 }
