@@ -13,6 +13,9 @@ class ViewController: UIViewController {
     lazy var exampleView: TimeToucher = {
         let view = TimeToucher()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.borderWidth = 5
+        view.layer.borderColor = UIColor.black.cgColor
+        view.alpha = 0.7
         return view
     }()
     
@@ -31,8 +34,8 @@ class ViewController: UIViewController {
     func createConstraints() {
         exampleView.safeAreaLayoutGuide.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         exampleView.safeAreaLayoutGuide.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        exampleView.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        exampleView.safeAreaLayoutGuide.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        exampleView.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: 400).isActive = true
+        exampleView.safeAreaLayoutGuide.heightAnchor.constraint(equalToConstant: 400).isActive = true
     }
 }
 

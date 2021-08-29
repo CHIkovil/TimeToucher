@@ -13,9 +13,10 @@ internal class TimeToucherCalculation {
         let distanceCirclesCenter = touchPoint.distance(to: circleCenter)
         let distanceToCircleTangencyPoint = getDistanceToCircleTangencyPoint(distanceCirclesCenter:distanceCirclesCenter, circleRadius: circleRadius)
         let twoTangencyPoint = getTwoTangencyPoint(distanceCirclesCenter: distanceCirclesCenter, timeCircleRadius: circleRadius, touchCircleRadius: distanceToCircleTangencyPoint, touchPoint: touchPoint, circleCenter: circleCenter)
-        let arrayFrontArc = getArrayFrontArc(twoTangencyPoint: twoTangencyPoint, countPoint: countPoint)
-        
-        return arrayFrontArc
+//        let arrayFrontArc = getArrayFrontArc(twoTangencyPoint: twoTangencyPoint, countPoint: countPoint)
+//
+//        return arrayFrontArc
+        return [twoTangencyPoint.0, twoTangencyPoint.1]
     }
     
 
@@ -47,8 +48,8 @@ private extension TimeToucherCalculation {
     }
     
     static func getArrayFrontArc(twoTangencyPoint: (one: CGPoint, second:CGPoint) , countPoint: Int) -> [CGPoint] {
-        let a = abs(twoTangencyPoint.one.x - twoTangencyPoint.second.x)
-        let b = abs(twoTangencyPoint.one.y - twoTangencyPoint.second.y)
+        let a = twoTangencyPoint.one.x - twoTangencyPoint.second.x
+        let b = twoTangencyPoint.one.y - twoTangencyPoint.second.y
         let angleStep = Double.pi / Double(countPoint + 1)
         var angle = angleStep
         var points: [CGPoint] = []
