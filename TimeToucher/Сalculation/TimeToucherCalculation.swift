@@ -27,6 +27,24 @@ internal class TimeToucherCalculation {
         return sqrt(pow(point.x - circleCenter.x, 2) + pow(point.y - circleCenter.y, 2)) < circleRadius
     }
     
+    static func circleTouchingThreePoints(a: CGPoint, b: CGPoint, c: CGPoint) -> TouchingThreePointsResult {
+        let d1 = CGPoint(x: b.y - a.y, y: a.x - b.x)
+        let d2 = CGPoint(x: c.y - a.y, y: a.x - c.x)
+        let k: CGFloat = d2.x * d1.y - d2.y * d1.x
+        guard k < -0.00001 || k > 0.00001 else {
+            return TouchingThreePointsResult.invalid
+        }
+        let s1 = CGPoint(x: (a.x + b.x) / 2, y: (a.y + b.y) / 2)
+        let s2 = CGPoint(x: (a.x + c.x) / 2, y: (a.y + c.y) / 2)
+        let l: CGFloat = d1.x * (s2.y - s1.y) - d1.y * (s2.x - s1.x)
+        let m: CGFloat = l / k
+        let center = CGPoint(x: s2.x + m * d2.x, y: s2.y + m * d2.y)
+        let dx = center.x - a.x
+        let dy = center.y - a.y
+        let radius = sqrt(dx * dx + dy * dy)
+        return TouchingThreePointsResult.circle(center: center, radius: radius)
+    }
+    
 }
 
 private extension TimeToucherCalculation {
