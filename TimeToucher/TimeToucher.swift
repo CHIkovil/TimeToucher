@@ -46,46 +46,27 @@ public final class TimeToucher: UIView {
             let arcRadius = arcsSetup.maxArc.value.radius
             let arcLineWidth = arcsSetup.maxArc.value.lineWidth
             
-            let maxArcCenter:CGPoint = (self.layer.sublayers?.filter({$0.name == arcName}).first!.position)!
+            let centerMaxArc:CGPoint = (self.layer.sublayers?.filter({$0.name == arcName}).first!.position)!
             
-            if TimeToucherCalculation.checkCircleContainsPoint(point: touchPoint, circleCenter: maxArcCenter, circleRadius: arcRadius + arcLineWidth / 2){
+            if TimeToucherCalculation.checkCircleContainsPoint(point: touchPoint, circleCenter: centerMaxArc, circleRadius: arcRadius + arcLineWidth / 2){
                 return
             }
             
-            let array = TimeToucherCalculation.getArrayTouchFrontArc(touchPoint: touchPoint, circleCenter: CGPoint(x: frame.size.width/2, y: frame.size.height/2), circleRadius: arcsSetup.hourArc.radius + arcsSetup.hourArc.lineWidth / 2, countPoint: animationLinesSetup.countAnimation)
+            let arrayFrontArc = TimeToucherCalculation.getArrayTouchFrontArc(touchPoint: touchPoint, circleCenter: CGPoint(x: frame.size.width/2, y: frame.size.height/2), circleRadius: arcsSetup.hourArc.radius + arcsSetup.hourArc.lineWidth / 2, countPoint: animationLinesSetup.countAnimation)
             
+            print(arrayFrontArc.count)
             
-            let startLayerPoint = CAShapeLayer()
-            startLayerPoint.path = UIBezierPath(arcCenter: array[0],
-                                                radius: 5,
-                                                startAngle: 0,
-                                                endAngle: .pi * 2,
-                                                clockwise: true).cgPath
-            startLayerPoint.strokeColor = UIColor.red.cgColor
-            startLayerPoint.fillColor = UIColor.red.cgColor
-            self.layer.addSublayer(startLayerPoint)
-            
-            let endLayerPoint = CAShapeLayer()
-            endLayerPoint.path = UIBezierPath(arcCenter: array[1],
-                                                radius: 5,
-                                                startAngle: 0,
-                                                endAngle: .pi * 2,
-                                                clockwise: true).cgPath
-            endLayerPoint.strokeColor = UIColor.black.cgColor
-            endLayerPoint.fillColor = UIColor.black.cgColor
-            self.layer.addSublayer(endLayerPoint)
-            
-//            for i in array {
-//                let layer = CAShapeLayer()
-//                layer.path = UIBezierPath(arcCenter: i,
-//                                                    radius: 5,
-//                                                    startAngle: 0,
-//                                                    endAngle: .pi * 2,
-//                                                    clockwise: true).cgPath
-//                layer.strokeColor = UIColor.black.cgColor
-//                layer.fillColor = UIColor.black.cgColor
-//                self.layer.addSublayer(layer)
-//            }
+            for i in arrayFrontArc {
+                let layer = CAShapeLayer()
+                layer.path = UIBezierPath(arcCenter: i,
+                                                    radius: 5,
+                                                    startAngle: 0,
+                                                    endAngle: .pi * 2,
+                                                    clockwise: true).cgPath
+                layer.strokeColor = UIColor.black.cgColor
+                layer.fillColor = UIColor.black.cgColor
+                self.layer.addSublayer(layer)
+            }
         }
     }
 }
