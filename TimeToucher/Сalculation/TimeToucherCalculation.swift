@@ -81,17 +81,19 @@ private extension TimeToucherCalculation {
             endAngle += 360
         }
         
-        let angleStep = (abs(endAngle - startAngle) / CGFloat(countPoint)).rounded(.down)
+        let angleStep = (abs(endAngle - startAngle) / CGFloat(countPoint + 1)).rounded(.down)
        
         var points: [CGPoint] = []
         var angle = startAngle + angleStep
+        var count = 0
         
-        while angle < endAngle{
+        while angle < endAngle && count < countPoint{
             let radians = angle * CGFloat.pi / 180
             let x = circleCenter.x + circleRadius * cos(radians)
             let y = circleCenter.y + circleRadius * sin(radians)
             points.append(CGPoint(x: x, y: y))
             angle += angleStep
+            count += 1
         }
         
         return points

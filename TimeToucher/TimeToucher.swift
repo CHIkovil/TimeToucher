@@ -19,7 +19,7 @@ public final class TimeToucher: UIView {
     }
     
     public var animationLinesSetup: LTimeToucher {
-        return LTimeToucher(countAnimation: 5)
+        return LTimeToucher(countAnimation: 1)
     }
     
     public func animateArcs(){
