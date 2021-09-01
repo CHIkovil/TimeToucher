@@ -79,17 +79,21 @@ private extension TimeToucherCalculation {
         let startAngle = anglesTangency2Point.start
         var endAngle = anglesTangency2Point.end
         
-        if startAngle < CGFloat(360) && startAngle > CGFloat(180) {
-            endAngle += 360
+        if endAngle < startAngle{
+            endAngle = 360 + endAngle
         }
         
-        let angleStep = (abs(endAngle - startAngle) / CGFloat(countPoint + 1)).rounded(.down)
+        let angleStep = ((endAngle - startAngle) / CGFloat(countPoint + 1)).rounded(.down)
        
         var points: [CGPoint] = []
         var angle = startAngle + angleStep
         var count = 0
         
         while angle < endAngle && count < countPoint{
+            if angle >= 360{
+                let remainderAngle = angle - 360
+                angle = remainderAngle
+            }
             let radians = angle * CGFloat.pi / 180
             let x = circleCenter.x + circleRadius * cos(radians)
             let y = circleCenter.y + circleRadius * sin(radians)
