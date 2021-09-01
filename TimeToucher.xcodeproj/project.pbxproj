@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1701699B26DD866A00B48FCC /* TouchingThreePointsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1701699A26DD866A00B48FCC /* TouchingThreePointsResult.swift */; };
 		1713ED8D26D796BB00770017 /* TimeToucher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1713ED8C26D796BB00770017 /* TimeToucher.swift */; };
 		1713ED8F26D79BEB00770017 /* ATimeToucher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1713ED8E26D79BEB00770017 /* ATimeToucher.swift */; };
 		1766BABD26D982090074291E /* ASTimeToucher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1766BABC26D982090074291E /* ASTimeToucher.swift */; };
@@ -37,7 +36,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1701699A26DD866A00B48FCC /* TouchingThreePointsResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchingThreePointsResult.swift; sourceTree = "<group>"; };
 		1713ED8C26D796BB00770017 /* TimeToucher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToucher.swift; sourceTree = "<group>"; };
 		1713ED8E26D79BEB00770017 /* ATimeToucher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATimeToucher.swift; sourceTree = "<group>"; };
 		1766BABC26D982090074291E /* ASTimeToucher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASTimeToucher.swift; sourceTree = "<group>"; };
@@ -159,7 +157,6 @@
 				1766BABC26D982090074291E /* ASTimeToucher.swift */,
 				1713ED8E26D79BEB00770017 /* ATimeToucher.swift */,
 				17E32FFF26DAA9BF004F5F52 /* ArcShapeLayer.swift */,
-				1701699A26DD866A00B48FCC /* TouchingThreePointsResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -342,7 +339,6 @@
 				1713ED8F26D79BEB00770017 /* ATimeToucher.swift in Sources */,
 				17E32FFB26DAA6FF004F5F52 /* TimeToucherDrawing.swift in Sources */,
 				17E32FFE26DAA7AF004F5F52 /* TimeToucherAnimation.swift in Sources */,
-				1701699B26DD866A00B48FCC /* TouchingThreePointsResult.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,7 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 public struct LTimeToucher {
-    let countAnimation: Int
+    public var countAnimation: Int
+    public var animationDuration: Double
+    public var width: CGFloat
+    public var color: UIColor
 }

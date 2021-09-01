@@ -9,11 +9,22 @@ import Foundation
 import UIKit
 
 internal class TimeToucherAnimation {
-    static func getShapeLayerAnimation(arc: ATimeToucher) -> CABasicAnimation{
+    static func arc(arcSetup: ATimeToucher) -> CABasicAnimation{
         let animation = CABasicAnimation(keyPath: "transform.rotation")
         animation.byValue = NSNumber(floatLiteral: Double(CGFloat.pi * 2))
-        animation.duration = arc.animationDuration
+        animation.duration = arcSetup.animationDuration
         animation.repeatCount = .infinity
+        return animation
+    }
+    
+    static func line(lineSetup: LTimeToucher) -> CABasicAnimation{
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.toValue = 1
+        animation.duration = lineSetup.animationDuration
+        animation.timingFunction = CAMediaTimingFunction(
+            name: CAMediaTimingFunctionName.easeInEaseOut)
+        animation.fillMode = CAMediaTimingFillMode.both
+        animation.isRemovedOnCompletion = true
         return animation
     }
 }

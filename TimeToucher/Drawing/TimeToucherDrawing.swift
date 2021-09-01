@@ -9,30 +9,59 @@ import Foundation
 import UIKit
 
 internal class TimeToucherDrawing {
-    static func getArcShapeLayer(centerPoint: CGPoint, arc: ATimeToucher) -> ArcShapeLayer{
+    static func arc(center: CGPoint, arcSetup: ATimeToucher) -> ArcShapeLayer{
         let aDegree = CGFloat.pi / 180
         
         let backgroundShapeLayer = CAShapeLayer()
-        backgroundShapeLayer.path = UIBezierPath(arcCenter: centerPoint,
-                                            radius: arc.radius,
+        backgroundShapeLayer.path = UIBezierPath(arcCenter: center,
+                                            radius: arcSetup.radius,
                                             startAngle: 0,
                                             endAngle: .pi * 2,
                                             clockwise: true).cgPath
-        backgroundShapeLayer.strokeColor = arc.backgroundColor.cgColor
-        backgroundShapeLayer.lineWidth = arc.lineWidth
+        backgroundShapeLayer.strokeColor = arcSetup.backgroundColor.cgColor
+        backgroundShapeLayer.lineWidth = arcSetup.lineWidth
         backgroundShapeLayer.fillColor = UIColor.clear.cgColor
         
         let timeShapeLayer = CAShapeLayer()
-        timeShapeLayer.path = UIBezierPath(arcCenter: centerPoint,
-                                      radius: arc.radius,
-                                      startAngle: aDegree * arc.startDegree,
-                                      endAngle: aDegree * (arc.startDegree + 360 * arc.percentage / 100),
+        timeShapeLayer.path = UIBezierPath(arcCenter: center,
+                                      radius: arcSetup.radius,
+                                      startAngle: aDegree * arcSetup.startDegree,
+                                      endAngle: aDegree * (arcSetup.startDegree + 360 * arcSetup.percentage / 100),
                                       clockwise: true).cgPath
-        timeShapeLayer.strokeColor  = arc.color.cgColor
-        timeShapeLayer.lineWidth = arc.lineWidth
+        timeShapeLayer.strokeColor  = arcSetup.color.cgColor
+        timeShapeLayer.lineWidth = arcSetup.lineWidth
         timeShapeLayer.fillColor = UIColor.clear.cgColor
-        timeShapeLayer.position = centerPoint
+        timeShapeLayer.position = center
         
         return ArcShapeLayer(time: timeShapeLayer, background: backgroundShapeLayer)
+    }
+    
+    static func line(start: CGPoint, end: CGPoint, linesSetup: LTimeToucher) -> CAShapeLayer{
+        let path = UIBezierPath()
+        
+        path.move(to: CGPoint(x: start.x, y: start.y))
+        path.addLine(to: CGPoint(x: end.x,
+                                 y: end.y))
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.strokeColor = linesSetup.color.cgColor
+        shapeLayer.lineWidth = linesSetup.width
+        shapeLayer.lineCap = CAShapeLayerLineCap.round
+        shapeLayer.lineJoin = CAShapeLayerLineJoin.round
+        shapeLayer.strokeEnd = 0
+        return shapeLayer
+    }
+}
+
+internal extension UIColor {
+    static var random: UIColor {
+        return UIColor(
+            red: .random(in: 0...1),
+            green: .random(in: 0...1),
+            blue: .random(in: 0...1),
+            alpha: 0.9
+        )
     }
 }
