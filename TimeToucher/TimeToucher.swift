@@ -19,7 +19,7 @@ public final class TimeToucher: UIView {
     }
     
     public var linesSetup: LTimeToucher {
-        return LTimeToucher(countAnimation: 10, animationDuration: 0.7, width: 5, color: UIColor.random)
+        return LTimeToucher(count: 10, animationDuration: 0.7, width: 5, color: UIColor.random)
     }
     
     public func animateArcs(){
@@ -29,6 +29,7 @@ public final class TimeToucher: UIView {
             let arcShapeLayer = TimeToucherDrawing.arc(center: CGPoint(x: frame.size.width/2, y: frame.size.height/2), arcSetup: arc.value)
             arcShapeLayer.time.bounds = self.layer.bounds
             arcShapeLayer.time.name = arc.key
+            arcShapeLayer.background.name = arc.key
             
             let arcAnimation = TimeToucherAnimation.arc(arcSetup: arc.value)
             arcShapeLayer.time.add(arcAnimation, forKey: arc.key)
@@ -39,17 +40,39 @@ public final class TimeToucher: UIView {
     }
     
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        animateLines(touches: touches)
+    }
+    
+    public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        animateLines(touches: touches)
+    }
+    
+    public override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let fillSublayers = self.layer.sublayers?.filter {$0.name != nil}
+        self.layer.sublayers = fillSublayers
+    }
+    
+    public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let fillSublayers = self.layer.sublayers?.filter {$0.name != nil}
+        self.layer.sublayers = fillSublayers
+    }
+}
+
+private extension TimeToucher{
+    func animateLines(touches: Set<UITouch>){
         let touchesLocation = touches.map { return $0.location(in: self)}
         var touchPoint = touchesLocation.first!
+        var touchArc = arcsSetup.secondArc
         
         switch touches.count {
         case 3:
             guard let touchCenter = TimeToucherCalculation.circleCenterTouchingThreePoints(a: touchesLocation[0], b: touchesLocation[1], c: touchesLocation[2]) else {
                 fallthrough
             }
+            touchArc = arcsSetup.hourArc
             touchPoint = touchCenter
         case 2:
+            touchArc = arcsSetup.minuteArc
             touchPoint = TimeToucherCalculation.circleCenterTouchingTwoPoints(a: touchesLocation[0], b: touchesLocation[1])
         default: break
         }
@@ -60,11 +83,11 @@ public final class TimeToucher: UIView {
         
         let centerMaxArc:CGPoint = (self.layer.sublayers?.filter({$0.name == arcName}).first!.position)!
         
-        if TimeToucherCalculation.checkCircleContainsPoint(point: touchPoint, circleCenter: centerMaxArc, circleRadius: arcRadius + arcLineWidth / 2){
+        if TimeToucherCalculation.checkCircleContainsPoint(point: touchPoint, circleCenter: centerMaxArc, circleRadius: arcRadius + arcLineWidth / 2) || !self.bounds.contains(touchPoint){
             return
         }
         
-        let arrayFrontArc = TimeToucherCalculation.arrayTouchingFrontArc(touchPoint: touchPoint, circleCenter: CGPoint(x: frame.size.width/2, y: frame.size.height/2), circleRadius: arcsSetup.hourArc.radius + arcsSetup.hourArc.lineWidth / 2, countPoint: linesSetup.countAnimation)
+        let arrayFrontArc = TimeToucherCalculation.arrayTouchingFrontArc(touchPoint: touchPoint, circleCenter: CGPoint(x: frame.size.width/2, y: frame.size.height/2), circleRadius: touchArc.radius + touchArc.lineWidth / 2, countPoint: linesSetup.count)
         
         for frontPoint in arrayFrontArc{
             let lineShapeLayer = TimeToucherDrawing.line(start: frontPoint, end: touchPoint, linesSetup: linesSetup)
@@ -72,19 +95,6 @@ public final class TimeToucher: UIView {
             lineShapeLayer.add(lineAnimation, forKey: nil)
             self.layer.addSublayer(lineShapeLayer)
         }
-//        print(arrayFrontArc.count)
-//
-//        for i in arrayFrontArc {
-//            let layer = CAShapeLayer()
-//            layer.path = UIBezierPath(arcCenter: i,
-//                                      radius: 5,
-//                                      startAngle: 0,
-//                                      endAngle: .pi * 2,
-//                                      clockwise: true).cgPath
-//            layer.strokeColor = UIColor.black.cgColor
-//            layer.fillColor = UIColor.black.cgColor
-//            self.layer.addSublayer(layer)
-//        }
     }
 }
 

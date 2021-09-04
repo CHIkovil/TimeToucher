@@ -47,6 +47,9 @@ internal class TimeToucherCalculation {
         return CGPoint(x: (a.x + b.x) / 2, y: (a.y + b.y) / 2)
     }
     
+    static func random2PointOnLine(start: CGPoint, end: CGPoint){
+        
+    }
 }
 
 private extension TimeToucherCalculation {

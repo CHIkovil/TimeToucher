@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 public struct LTimeToucher {
-    public var countAnimation: Int
+    public var count: Int
     public var animationDuration: Double
     public var width: CGFloat
     public var color: UIColor
