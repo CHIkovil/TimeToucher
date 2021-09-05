@@ -1,5 +1,5 @@
 //
-//  TimeToucherDrawing.swift
+//  TimeToucherDraw.swift
 //  TimeToucher
 //
 //  Created by Nikolas on 28.08.2021.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-internal class TimeToucherDrawing {
+internal class TimeToucherDraw {
     static func arc(center: CGPoint, arcSetup: ATimeToucher) -> ArcShapeLayer{
         let aDegree = CGFloat.pi / 180
         
@@ -46,7 +46,11 @@ internal class TimeToucherDrawing {
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
         shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.strokeColor = linesSetup.color.cgColor
+        if let color = linesSetup.color{
+            shapeLayer.strokeColor = color.cgColor
+        }else{
+            shapeLayer.strokeColor = UIColor.random.cgColor
+        }
         shapeLayer.lineWidth = linesSetup.width
         shapeLayer.lineCap = CAShapeLayerLineCap.round
         shapeLayer.lineJoin = CAShapeLayerLineJoin.round

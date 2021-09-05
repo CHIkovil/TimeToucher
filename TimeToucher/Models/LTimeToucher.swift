@@ -12,5 +12,5 @@ public struct LTimeToucher {
     public var count: Int
     public var animationDuration: Double
     public var width: CGFloat
-    public var color: UIColor
+    public var color: UIColor?
 }

@@ -9,12 +9,12 @@ import Foundation
 import UIKit
 
 internal class TimeToucherCalculation {
-    static func arrayTouchingFrontArc(touchPoint: CGPoint, circleCenter: CGPoint, circleRadius: CGFloat, countPoint: Int) -> [CGPoint]{
+    static func arrayTouchFrontArc(touchPoint: CGPoint, circleCenter: CGPoint, circleRadius: CGFloat, countPoint: Int) -> [CGPoint]{
         let distanceBetweenCirclesCenter = touchPoint.distance(to: circleCenter)
         
         let distanceToCircleTangencyPoint = distanceToCircleTangencyPoint(distanceBetweenCirclesCenter:distanceBetweenCirclesCenter, circleRadius: circleRadius)
         
-        let tangency2Point = twoTangencyPointArray(distanceBetweenCirclesCenter: distanceBetweenCirclesCenter, timeCircleRadius: circleRadius, touchCircleRadius: distanceToCircleTangencyPoint, touchPoint: touchPoint, timeCircleCenter: circleCenter)
+        let tangency2Point = tangency2PointArray(distanceBetweenCirclesCenter: distanceBetweenCirclesCenter, timeCircleRadius: circleRadius, touchCircleRadius: distanceToCircleTangencyPoint, touchPoint: touchPoint, timeCircleCenter: circleCenter)
         
         let tangencyAngleArray = tangency2Point.map({angleToPoint(touchPoint: $0, circleCenter: circleCenter)})
         let anglesTangency2Point = (tangencyAngleArray[0],tangencyAngleArray[1])
@@ -24,11 +24,11 @@ internal class TimeToucherCalculation {
         return arrayFrontArc
     }
     
-    static func checkCircleContainsPoint(point: CGPoint, circleCenter: CGPoint, circleRadius: CGFloat) -> Bool{
-        return sqrt(pow(point.x - circleCenter.x, 2) + pow(point.y - circleCenter.y, 2)) < circleRadius
+    static func checkCircleNotContainsPoint(point: CGPoint, circleCenter: CGPoint, circleRadius: CGFloat) -> Bool{
+        return sqrt(pow(point.x - circleCenter.x, 2) + pow(point.y - circleCenter.y, 2)) > circleRadius
     }
     
-    static func circleCenterTouchingThreePoints(a: CGPoint, b: CGPoint, c: CGPoint) -> CGPoint? {
+    static func circleCenterTouch3Point(a: CGPoint, b: CGPoint, c: CGPoint) -> CGPoint? {
         let d1 = CGPoint(x: b.y - a.y, y: a.x - b.x)
         let d2 = CGPoint(x: c.y - a.y, y: a.x - c.x)
         let k: CGFloat = d2.x * d1.y - d2.y * d1.x
@@ -43,12 +43,24 @@ internal class TimeToucherCalculation {
         return center
     }
     
-    static func circleCenterTouchingTwoPoints(a: CGPoint, b: CGPoint) -> CGPoint {
+    static func circleCenterTouch2Point(a: CGPoint, b: CGPoint) -> CGPoint {
         return CGPoint(x: (a.x + b.x) / 2, y: (a.y + b.y) / 2)
     }
     
-    static func random2PointOnLine(start: CGPoint, end: CGPoint){
+    static func random2PointsOnLine(start: CGPoint, end: CGPoint) -> (CGPoint, CGPoint){
+        let a = (start.y - end.y)/(start.x - end.x)
+        let b = start.y - a * start.x
         
+        var random2Numbers:[CGFloat] = []
+        for _ in 0..<2{
+            if start.x < end.x{
+                random2Numbers.append(CGFloat.random(in: start.x...end.x))
+            }else{
+                random2Numbers.append(CGFloat.random(in: end.x...start.x))
+            }
+        }
+        let random2Points = random2Numbers.map {CGPoint(x: $0, y: a * $0 + b)}
+        return (random2Points[0], random2Points[1])
     }
 }
 
@@ -57,7 +69,7 @@ private extension TimeToucherCalculation {
         return sqrt(pow(distanceBetweenCirclesCenter, 2) - pow(circleRadius, 2))
     }
     
-    static func twoTangencyPointArray(distanceBetweenCirclesCenter: CGFloat, timeCircleRadius: CGFloat, touchCircleRadius: CGFloat, touchPoint: CGPoint, timeCircleCenter: CGPoint) -> [CGPoint]{
+    static func tangency2PointArray(distanceBetweenCirclesCenter: CGFloat, timeCircleRadius: CGFloat, touchCircleRadius: CGFloat, touchPoint: CGPoint, timeCircleCenter: CGPoint) -> [CGPoint]{
         let distanceToLineOfIntersection = (pow(timeCircleRadius,2) - pow(touchCircleRadius, 2) + pow(distanceBetweenCirclesCenter, 2)) / (2 * distanceBetweenCirclesCenter)
         let halfLineOfIntersection = sqrt(pow(timeCircleRadius,2) - pow(distanceToLineOfIntersection, 2))
         
@@ -118,7 +130,7 @@ private extension TimeToucherCalculation {
     }
 }
 
-private extension CGPoint {
+internal extension CGPoint {
     func distance(to point: CGPoint) -> CGFloat {
         return sqrt(pow(x - point.x, 2) + pow(y - point.y, 2))
     }
