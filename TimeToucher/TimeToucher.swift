@@ -10,7 +10,7 @@ import UIKit
 
 public final class TimeToucher: UIView {
     let name = "TimeToucher"
-
+    
     public lazy var arcsSetup: ASTimeToucher = {
         
         let secondLine = LTimeToucher(count: 10, animationDuration: 0.1, width: 8)
@@ -43,38 +43,54 @@ public final class TimeToucher: UIView {
     }
     
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touchAnimationSetup = getTouchAnimateSetup(touches: touches)
-
-        if !checkTouchBounds(touchPoint: touchAnimationSetup.point){
-            return
-        }
-        
-        let indexTouchArc = self.layer.sublayers!.enumerated().filter {return $0.element.name == touchAnimationSetup.arcName}.first!.offset
-        self.layer.sublayers![indexTouchArc].removeAllAnimations()
-
-        animateLines(touchAnimationSetup: touchAnimationSetup)
+        switchTouches(touchesName: "Began", touches: touches)
     }
     
     public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touchAnimationSetup = getTouchAnimateSetup(touches: touches)
-        
-        if !checkTouchBounds(touchPoint: touchAnimationSetup.point){
-            return
-        }
-    
-        animateArcTouches(touchAnimationSetup: touchAnimationSetup)
-        animateLines(touchAnimationSetup: touchAnimationSetup)
+        switchTouches(touchesName: "Moved", touches: touches)
     }
     
     public override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.layer.sublayers?.removeSubrange(6...)
+        switchTouches(touchesName: "Cancelled", touches: touches)
     }
     
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.layer.sublayers?.removeSubrange(6...)
+        switchTouches(touchesName: "Ended", touches: touches)
     }
     
-    private func animateLines(touchAnimationSetup: TouchAnimationSetup){
+    private func switchTouches(touchesName: String, touches: Set<UITouch>){
+        let touchAnimationSetup = getTouchAnimationSetup(touches: touches)
+        
+        let indexTouchArc = self.layer.sublayers!.enumerated().filter {return $0.element.name == touchAnimationSetup.arcName}.first!.offset
+        
+        if !checkTouchBounds(touchPoint: touchAnimationSetup.point){
+            self.layer.sublayers![indexTouchArc].removeAllAnimations()
+            let currentArcTransform: CATransform3D = self.layer.sublayers![indexTouchArc].presentation()!.transform
+            let currentArcAngle = atan2(currentArcTransform.m12, currentArcTransform.m11)
+            self.layer.sublayers![indexTouchArc].transform = CATransform3DMakeRotation(currentArcAngle, 0, 0, 1)
+            rebootArcAnimation(indexTouchArc: indexTouchArc, touchAnimationSetup: touchAnimationSetup)
+            return
+        }
+        
+        switch touchesName {
+        case "Began", "Moved":
+            self.layer.sublayers![indexTouchArc].removeAllAnimations()
+            animateArcTouches(indexTouchArc: indexTouchArc, touchAnimationSetup: touchAnimationSetup)
+            animateLines(touchAnimationSetup: touchAnimationSetup)
+            return
+        case "Cancelled":
+            fallthrough
+        case "Ended":
+            rebootArcAnimation(indexTouchArc: indexTouchArc, touchAnimationSetup: touchAnimationSetup)
+        default:
+            self.layer.sublayers?.removeSubrange(6...)
+        }
+    }
+}
+
+private extension TimeToucher{
+    
+    func animateLines(touchAnimationSetup: TouchAnimationSetup){
         let arrayFrontArc = TimeToucherCalculation.arrayFrontTouchArc(touchPoint: touchAnimationSetup.point, circleCenter: CGPoint(x: frame.size.width/2, y: frame.size.height/2), circleRadius: touchAnimationSetup.arc.radius + touchAnimationSetup.arc.lineWidth / 2, countPoint: touchAnimationSetup.arc.animationLineSetup.count)
         
         for frontPoint in arrayFrontArc{
@@ -86,20 +102,24 @@ public final class TimeToucher: UIView {
         }
     }
     
-    private func animateArcTouches(touchAnimationSetup: TouchAnimationSetup){
-        let indexTouchArc = self.layer.sublayers!.enumerated().filter {return $0.element.name == touchAnimationSetup.arcName}.first!.offset
+    func animateArcTouches(indexTouchArc: Int, touchAnimationSetup: TouchAnimationSetup){
+        
         let currentArcTransform: CATransform3D = self.layer.sublayers![indexTouchArc].presentation()!.transform
         
         let toAngle = TimeToucherCalculation.getRotateArcAngle(currentArcTransform: currentArcTransform, touchAnimationSetup: touchAnimationSetup)
-    
+        
         let rotationTransform = TimeToucherAnimation.touchesArc(toAngle: toAngle)
         self.layer.sublayers![indexTouchArc].transform = rotationTransform
     }
-}
-
-private extension TimeToucher{
     
-    func getTouchAnimateSetup(touches: Set<UITouch>) -> TouchAnimationSetup {
+    func rebootArcAnimation(indexTouchArc: Int,  touchAnimationSetup: TouchAnimationSetup){
+        let arcSetup = arcsSetup.directory[touchAnimationSetup.arcName]
+        let arcAnimation = TimeToucherAnimation.arc(arcSetup: arcSetup!)
+        
+        self.layer.sublayers![indexTouchArc].add(arcAnimation, forKey: touchAnimationSetup.arcName)
+    }
+    
+    func getTouchAnimationSetup(touches: Set<UITouch>) -> TouchAnimationSetup {
         let touchesLocation = touches.map { return $0.location(in: self)}
         var touchPoint = touchesLocation.first!
         var touchArc = arcsSetup.secondArc
@@ -134,6 +154,8 @@ private extension TimeToucher{
         }
         return true
     }
+    
+    
 }
 
 
