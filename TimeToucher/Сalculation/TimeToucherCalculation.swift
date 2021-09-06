@@ -9,14 +9,14 @@ import Foundation
 import UIKit
 
 internal class TimeToucherCalculation {
-    static func arrayTouchFrontArc(touchPoint: CGPoint, circleCenter: CGPoint, circleRadius: CGFloat, countPoint: Int) -> [CGPoint]{
+    static func arrayFrontTouchArc(touchPoint: CGPoint, circleCenter: CGPoint, circleRadius: CGFloat, countPoint: Int) -> [CGPoint]{
         let distanceBetweenCirclesCenter = touchPoint.distance(to: circleCenter)
         
         let distanceToCircleTangencyPoint = distanceToCircleTangencyPoint(distanceBetweenCirclesCenter:distanceBetweenCirclesCenter, circleRadius: circleRadius)
         
-        let tangency2Point = tangency2PointArray(distanceBetweenCirclesCenter: distanceBetweenCirclesCenter, timeCircleRadius: circleRadius, touchCircleRadius: distanceToCircleTangencyPoint, touchPoint: touchPoint, timeCircleCenter: circleCenter)
+        let tangency2PointArray = tangency2PointArray(distanceBetweenCirclesCenter: distanceBetweenCirclesCenter, timeCircleRadius: circleRadius, touchCircleRadius: distanceToCircleTangencyPoint, touchPoint: touchPoint, timeCircleCenter: circleCenter)
         
-        let tangencyAngleArray = tangency2Point.map({angleToPoint(touchPoint: $0, circleCenter: circleCenter)})
+        let tangencyAngleArray = tangency2PointArray.map({angleToPoint(touchPoint: $0, circleCenter: circleCenter)})
         let anglesTangency2Point = (tangencyAngleArray[0],tangencyAngleArray[1])
         
         let arrayFrontArc = frontArcArray(anglesTangency2Point: anglesTangency2Point, countPoint: countPoint, circleRadius: circleRadius, circleCenter: circleCenter)
@@ -61,6 +61,27 @@ internal class TimeToucherCalculation {
         }
         let random2Points = random2Numbers.map {CGPoint(x: $0, y: a * $0 + b)}
         return (random2Points[0], random2Points[1])
+    }
+    
+    static func angleToPoint(touchPoint:CGPoint, circleCenter: CGPoint) -> CGFloat{
+         let dx =  circleCenter.x - touchPoint.x
+         let dy =  circleCenter.y - touchPoint.y
+         let radians = atan2(dy, dx) + .pi
+         
+         let degree = radians * (180 / .pi)
+         return degree
+     }
+    
+    static func getRotateArcAngle(currentArcTransform: CATransform3D, touchAnimationSetup: TouchAnimationSetup ) -> CGFloat {
+        let currentArcAngle = atan2(currentArcTransform.m12, currentArcTransform.m11)
+        
+        let startArcAngle = touchAnimationSetup.arc.startDegree
+        let endArcAngle = touchAnimationSetup.arc.startDegree + 360 * touchAnimationSetup.arc.percentage / 100
+        
+        let centerArcAngle = (endArcAngle - startArcAngle) / 2
+        
+        let toAngle =  angleToPoint(touchPoint: touchAnimationSetup.point, circleCenter: touchAnimationSetup.circleCenter) - currentArcAngle - centerArcAngle
+        return toAngle
     }
 }
 
@@ -118,15 +139,6 @@ private extension TimeToucherCalculation {
         }
         
         return points
-    }
-    
-   static func angleToPoint(touchPoint:CGPoint, circleCenter: CGPoint) -> CGFloat{
-        let dx =  circleCenter.x - touchPoint.x
-        let dy =  circleCenter.y - touchPoint.y
-        let radians = atan2(dy, dx) + CGFloat.pi
-        
-        let degree = radians * (180 / CGFloat.pi)
-        return degree
     }
 }
 

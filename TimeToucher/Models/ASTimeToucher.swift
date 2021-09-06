@@ -22,5 +22,3 @@ public struct ASTimeToucher {
         return (arc.key, arc.value)
     }
 }
-
-internal typealias ArcsDirectory = [String:ATimeToucher]

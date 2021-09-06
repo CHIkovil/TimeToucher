@@ -17,5 +17,5 @@ public struct ATimeToucher{
     public var backgroundColor: UIColor
     public var animationDuration: Double
     
-    public var lineSetup: LTimeToucher
+    public var animationLineSetup: LTimeToucher
 }

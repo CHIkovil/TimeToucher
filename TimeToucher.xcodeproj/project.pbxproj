@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1713ED8D26D796BB00770017 /* TimeToucher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1713ED8C26D796BB00770017 /* TimeToucher.swift */; };
 		1713ED8F26D79BEB00770017 /* ATimeToucher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1713ED8E26D79BEB00770017 /* ATimeToucher.swift */; };
+		1724450E26E66C11001E98AF /* TouchAnimationSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1724450D26E66C11001E98AF /* TouchAnimationSetup.swift */; };
 		1766BABD26D982090074291E /* ASTimeToucher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1766BABC26D982090074291E /* ASTimeToucher.swift */; };
 		17675A7326D6D55000B5CC4A /* TimeToucher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17675A6926D6D55000B5CC4A /* TimeToucher.framework */; };
 		17675A7826D6D55000B5CC4A /* TimeToucherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17675A7726D6D55000B5CC4A /* TimeToucherTests.swift */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		1713ED8C26D796BB00770017 /* TimeToucher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToucher.swift; sourceTree = "<group>"; };
 		1713ED8E26D79BEB00770017 /* ATimeToucher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ATimeToucher.swift; sourceTree = "<group>"; };
+		1724450D26E66C11001E98AF /* TouchAnimationSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchAnimationSetup.swift; sourceTree = "<group>"; };
 		1766BABC26D982090074291E /* ASTimeToucher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASTimeToucher.swift; sourceTree = "<group>"; };
 		17675A6926D6D55000B5CC4A /* TimeToucher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TimeToucher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		17675A6C26D6D55000B5CC4A /* TimeToucher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeToucher.h; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				1766BABC26D982090074291E /* ASTimeToucher.swift */,
 				1713ED8E26D79BEB00770017 /* ATimeToucher.swift */,
 				17E32FFF26DAA9BF004F5F52 /* ArcShapeLayer.swift */,
+				1724450D26E66C11001E98AF /* TouchAnimationSetup.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 			files = (
 				17E3300026DAA9BF004F5F52 /* ArcShapeLayer.swift in Sources */,
 				1766BABD26D982090074291E /* ASTimeToucher.swift in Sources */,
+				1724450E26E66C11001E98AF /* TouchAnimationSetup.swift in Sources */,
 				17E3300726DB08D6004F5F52 /* LTimeToucher.swift in Sources */,
 				17E3300326DAC8A1004F5F52 /* TimeToucherCalculation.swift in Sources */,
 				1713ED8D26D796BB00770017 /* TimeToucher.swift in Sources */,
