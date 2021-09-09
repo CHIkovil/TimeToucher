@@ -28,7 +28,7 @@ internal class TimeToucherAnimation {
         return animation
     }
 
-    static func touchesArc(toAngle: CGFloat) -> CATransform3D{
+    static func arcTouches(toAngle: CGFloat) -> CATransform3D{
         let radians = CGFloat(toAngle * .pi/180)
         let rotationTransform = CATransform3DMakeRotation(radians, 0.0, 0.0, 1.0)
         return rotationTransform

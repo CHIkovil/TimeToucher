@@ -8,8 +8,14 @@
 import Foundation
 import UIKit
 
+public protocol TimeToucherDelegate:NSObjectProtocol {
+    func timeMoved(formatTime: String)
+}
+
 public final class TimeToucher: UIView {
     let name = "TimeToucher"
+    
+    weak public var delegate: TimeToucherDelegate?
     
     public lazy var arcsSetup: ASTimeToucher = {
         
@@ -29,7 +35,7 @@ public final class TimeToucher: UIView {
         self.isMultipleTouchEnabled = true
         
         for arc in arcsSetup.directory{
-            let arcShapeLayer = TimeToucherDraw.arc(center: CGPoint(x: frame.size.width/2, y: frame.size.height/2), arcSetup: arc.value)
+            let arcShapeLayer = TimeToucherDrawing.arc(center: CGPoint(x: frame.size.width/2, y: frame.size.height/2), arcSetup: arc.value)
             arcShapeLayer.time.bounds = self.layer.bounds
             arcShapeLayer.time.name = arc.key
             arcShapeLayer.background.name = "back\(arc.key)"
@@ -59,7 +65,7 @@ public final class TimeToucher: UIView {
     }
     
     private func switchTouches(touchesName: String, touches: Set<UITouch>){
-        let touchAnimationSetup = getTouchAnimationSetup(touches: touches)
+        let touchAnimationSetup = touchAnimationSetup(touches: touches)
         
         let indexTouchArc = self.layer.sublayers!.enumerated().filter {return $0.element.name == touchAnimationSetup.arcName}.first!.offset
         
@@ -77,6 +83,7 @@ public final class TimeToucher: UIView {
             self.layer.sublayers![indexTouchArc].removeAllAnimations()
             animateArcTouches(indexTouchArc: indexTouchArc, touchAnimationSetup: touchAnimationSetup)
             animateLines(touchAnimationSetup: touchAnimationSetup)
+            setTime(touchAnimationSetup: touchAnimationSetup)
             return
         case "Cancelled":
             fallthrough
@@ -95,7 +102,7 @@ private extension TimeToucher{
         
         for frontPoint in arrayFrontArc{
             let random2Points = TimeToucherCalculation.random2PointsOnLine(start: frontPoint, end: touchAnimationSetup.point)
-            let lineShapeLayer = TimeToucherDraw.line(start: random2Points.0, end: random2Points.1, linesSetup: touchAnimationSetup.arc.animationLineSetup)
+            let lineShapeLayer = TimeToucherDrawing.line(start: random2Points.0, end: random2Points.1, linesSetup: touchAnimationSetup.arc.animationLineSetup)
             let lineAnimation = TimeToucherAnimation.line(lineSetup:touchAnimationSetup.arc.animationLineSetup)
             lineShapeLayer.add(lineAnimation, forKey: nil)
             self.layer.addSublayer(lineShapeLayer)
@@ -103,12 +110,11 @@ private extension TimeToucher{
     }
     
     func animateArcTouches(indexTouchArc: Int, touchAnimationSetup: TouchAnimationSetup){
-        
         let currentArcTransform: CATransform3D = self.layer.sublayers![indexTouchArc].presentation()!.transform
         
         let toAngle = TimeToucherCalculation.getRotateArcAngle(currentArcTransform: currentArcTransform, touchAnimationSetup: touchAnimationSetup)
         
-        let rotationTransform = TimeToucherAnimation.touchesArc(toAngle: toAngle)
+        let rotationTransform = TimeToucherAnimation.arcTouches(toAngle: toAngle)
         self.layer.sublayers![indexTouchArc].transform = rotationTransform
     }
     
@@ -119,26 +125,26 @@ private extension TimeToucher{
         self.layer.sublayers![indexTouchArc].add(arcAnimation, forKey: touchAnimationSetup.arcName)
     }
     
-    func getTouchAnimationSetup(touches: Set<UITouch>) -> TouchAnimationSetup {
+    func touchAnimationSetup(touches: Set<UITouch>) -> TouchAnimationSetup {
         let touchesLocation = touches.map { return $0.location(in: self)}
         var touchPoint = touchesLocation.first!
         var touchArc = arcsSetup.secondArc
         var touchArcName = "secondArc"
         
         switch touches.count {
-        case 3:
+        case 3, 2:
             guard let touchCenter = TimeToucherCalculation.circleCenterTouch3Point(a: touchesLocation[0], b: touchesLocation[1], c: touchesLocation[2]) else {
-                fallthrough
+                touchArc = arcsSetup.minuteArc
+                touchArcName = "minuteArc"
+                touchPoint = TimeToucherCalculation.circleCenterTouch2Point(a: touchesLocation[0], b: touchesLocation[1])
+                break
             }
             touchArc = arcsSetup.hourArc
             touchArcName = "hourArc"
             touchPoint = touchCenter
-        case 2:
-            touchArc = arcsSetup.minuteArc
-            touchArcName = "minuteArc"
-            touchPoint = TimeToucherCalculation.circleCenterTouch2Point(a: touchesLocation[0], b: touchesLocation[1])
         default: break
         }
+        
         return TouchAnimationSetup(point: touchPoint, arc: touchArc, arcName: touchArcName, circleCenter: CGPoint(x: frame.size.width/2, y: frame.size.height/2))
     }
     
@@ -155,6 +161,47 @@ private extension TimeToucher{
         return true
     }
     
+    func setTime(touchAnimationSetup: TouchAnimationSetup){
+        var second = "00"
+        var minute = "00"
+        var hour = "00"
+       
+        var touchAngle = TimeToucherCalculation.angleToPoint(touchPoint: touchAnimationSetup.point, circleCenter: touchAnimationSetup.circleCenter) + 90
+        
+        if touchAngle >= 360{
+            touchAngle = touchAngle - 360
+        }
+    
+        switch touchAnimationSetup.arcName {
+        case "secondArc", "minuteArc":
+            var timeNumber = Int(touchAngle) / 6
+            if timeNumber == 60 {timeNumber -= 1}
+            
+            var timeStr = "\(timeNumber)"
+            if (timeNumber / 10) == 0 {timeStr = "0" + timeStr}
+              
+            if touchAnimationSetup.arcName == "secondArc"{
+                second = timeStr
+            }else{
+                minute = timeStr
+            }
+            
+        case "hourArc":
+            var timeNumber = Int(touchAngle) / 15
+            if timeNumber == 24 {timeNumber -= 1}
+
+            var timeStr = "\(timeNumber)"
+            if (timeNumber / 10) == 0 {timeStr = "0" + timeStr}
+            
+            hour  = timeStr
+        default:break
+        }
+        
+        
+        let formatTime = "\(hour):\(minute):\(second)"
+        print(formatTime)
+        self.delegate?.timeMoved(formatTime: formatTime)
+    }
     
 }
 

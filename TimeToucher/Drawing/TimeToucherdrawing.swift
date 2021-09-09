@@ -1,5 +1,5 @@
 //
-//  TimeToucherDraw.swift
+//  TimeToucherDrawing.swift
 //  TimeToucher
 //
 //  Created by Nikolas on 28.08.2021.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-internal class TimeToucherDraw {
+internal class TimeToucherDrawing {
     static func arc(center: CGPoint, arcSetup: ATimeToucher) -> ArcShapeLayer{
         let aDegree = CGFloat.pi / 180
         
