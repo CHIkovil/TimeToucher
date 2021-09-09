@@ -16,7 +16,7 @@
 		17675A7A26D6D55000B5CC4A /* TimeToucher.h in Headers */ = {isa = PBXBuildFile; fileRef = 17675A6C26D6D55000B5CC4A /* TimeToucher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		17675A8A26D6D57F00B5CC4A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17675A8926D6D57F00B5CC4A /* AppDelegate.swift */; };
 		17675A8C26D6D57F00B5CC4A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17675A8B26D6D57F00B5CC4A /* SceneDelegate.swift */; };
-		17675A8E26D6D57F00B5CC4A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17675A8D26D6D57F00B5CC4A /* ViewController.swift */; };
+		17675A8E26D6D57F00B5CC4A /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17675A8D26D6D57F00B5CC4A /* ExampleViewController.swift */; };
 		17675A9326D6D58000B5CC4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17675A9226D6D58000B5CC4A /* Assets.xcassets */; };
 		17675A9626D6D58000B5CC4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17675A9426D6D58000B5CC4A /* LaunchScreen.storyboard */; };
 		17E32FFB26DAA6FF004F5F52 /* TimeToucherdrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E32FFA26DAA6FF004F5F52 /* TimeToucherdrawing.swift */; };
@@ -50,7 +50,7 @@
 		17675A8726D6D57F00B5CC4A /* TimeToucherExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeToucherExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17675A8926D6D57F00B5CC4A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17675A8B26D6D57F00B5CC4A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		17675A8D26D6D57F00B5CC4A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		17675A8D26D6D57F00B5CC4A /* ExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		17675A9226D6D58000B5CC4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		17675A9526D6D58000B5CC4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		17675A9726D6D58000B5CC4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				17C71A6A26D6E36B00136CA3 /* SupFiles */,
-				17675A8D26D6D57F00B5CC4A /* ViewController.swift */,
+				17675A8D26D6D57F00B5CC4A /* ExampleViewController.swift */,
 				17675A9726D6D58000B5CC4A /* Info.plist */,
 			);
 			path = TimeToucherExamples;
@@ -358,7 +358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17675A8E26D6D57F00B5CC4A /* ViewController.swift in Sources */,
+				17675A8E26D6D57F00B5CC4A /* ExampleViewController.swift in Sources */,
 				17675A8A26D6D57F00B5CC4A /* AppDelegate.swift in Sources */,
 				17675A8C26D6D57F00B5CC4A /* SceneDelegate.swift in Sources */,
 			);

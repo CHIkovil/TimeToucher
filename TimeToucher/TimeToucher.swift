@@ -20,13 +20,13 @@ public final class TimeToucher: UIView {
     public lazy var arcsSetup: ASTimeToucher = {
         
         let secondLine = LTimeToucher(count: 10, animationDuration: 0.1, width: 8)
-        let secondArc = ATimeToucher(percentage: 40, lineWidth: 20, radius: 20, startDegree: 0, color: .random, backgroundColor: .lightGray, animationDuration: 10, animationLineSetup: secondLine)
+        let secondArc = ATimeToucher(percentage: 40, lineWidth: 20, radius: 30, startDegree: 0, color: .random, backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1), animationDuration: 6, animationLineSetup: secondLine)
         
         let minuteLine = LTimeToucher(count: 10, animationDuration: 0.1, width: 8)
-        let minuteArc = ATimeToucher(percentage: 40, lineWidth: 20, radius: 50, startDegree: 70, color: .random, backgroundColor: .lightGray,  animationDuration: 20, animationLineSetup: minuteLine)
+        let minuteArc = ATimeToucher(percentage: 40, lineWidth: 30, radius: 60, startDegree: 70, color: .random, backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1),  animationDuration: 4, animationLineSetup: minuteLine)
         
         let hourLine = LTimeToucher(count: 10, animationDuration: 0.1, width: 8)
-        let hourArc = ATimeToucher(percentage: 40, lineWidth: 20, radius: 80, startDegree: 180, color: .random,backgroundColor: .lightGray,  animationDuration: 30, animationLineSetup: hourLine)
+        let hourArc = ATimeToucher(percentage: 40, lineWidth: 40, radius: 100, startDegree: 180, color: .random,backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1),  animationDuration: 2, animationLineSetup: hourLine)
         
         return ASTimeToucher(secondArc: secondArc, minuteArc: minuteArc, hourArc: hourArc)
     }()
@@ -197,10 +197,7 @@ private extension TimeToucher{
         default:break
         }
         
-        
-        let formatTime = "\(hour):\(minute):\(second)"
-        print(formatTime)
-        self.delegate?.timeMoved(formatTime: formatTime)
+        self.delegate?.timeMoved(formatTime: "\(hour):\(minute):\(second)")
     }
     
 }
