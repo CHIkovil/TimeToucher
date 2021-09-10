@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 public protocol TimeToucherDelegate:NSObjectProtocol {
-    func timeMoved(formatTime: String)
+    func timeMoved(timeToSeconds: Int)
 }
 
 public final class TimeToucher: UIView {
@@ -63,6 +63,12 @@ public final class TimeToucher: UIView {
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         switchTouches(touchesName: "Ended", touches: touches)
     }
+    
+
+    
+    private var timeFormat: TimeFormat = {
+        return TimeFormat(seconds: 0, minutes: 0, hours: 0)
+    }()
     
     private func switchTouches(touchesName: String, touches: Set<UITouch>){
         let touchAnimationSetup = touchAnimationSetup(touches: touches)
@@ -162,44 +168,33 @@ private extension TimeToucher{
     }
     
     func setTime(touchAnimationSetup: TouchAnimationSetup){
-        var second = "00"
-        var minute = "00"
-        var hour = "00"
-       
         var touchAngle = TimeToucherCalculation.angleToPoint(touchPoint: touchAnimationSetup.point, circleCenter: touchAnimationSetup.circleCenter) + 90
         
         if touchAngle >= 360{
             touchAngle = touchAngle - 360
         }
-    
+        
         switch touchAnimationSetup.arcName {
         case "secondArc", "minuteArc":
             var timeNumber = Int(touchAngle) / 6
             if timeNumber == 60 {timeNumber -= 1}
-            
-            var timeStr = "\(timeNumber)"
-            if (timeNumber / 10) == 0 {timeStr = "0" + timeStr}
               
             if touchAnimationSetup.arcName == "secondArc"{
-                second = timeStr
+                timeFormat.seconds = timeNumber
             }else{
-                minute = timeStr
+                timeFormat.minutes = timeNumber
             }
             
         case "hourArc":
             var timeNumber = Int(touchAngle) / 15
             if timeNumber == 24 {timeNumber -= 1}
-
-            var timeStr = "\(timeNumber)"
-            if (timeNumber / 10) == 0 {timeStr = "0" + timeStr}
             
-            hour  = timeStr
+            timeFormat.hours = timeNumber
         default:break
         }
         
-        self.delegate?.timeMoved(formatTime: "\(hour):\(minute):\(second)")
+        self.delegate?.timeMoved(timeToSeconds: timeFormat.seconds + timeFormat.minutes * 60 + timeFormat.hours * 3600)
     }
-    
 }
 
 

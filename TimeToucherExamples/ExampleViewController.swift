@@ -66,17 +66,21 @@ class ExampleViewController: UIViewController {
 }
 
 extension ExampleViewController: TimeToucherDelegate{
-    func timeMoved(formatTime: String) {
-//        UIView.animate(withDuration: 0.1){[weak self] in
-//            guard let self = self else{return}
-//            
-//            let animation = CABasicAnimation(keyPath: "position")
-//            animation.fromValue = NSValue(cgPoint: CGPoint(x: self.timerLabel.center.x, y: self.timerLabel.center.y + 20))
-//            animation.toValue = NSValue(cgPoint: CGPoint(x: self.timerLabel.center.x, y: self.timerLabel.center.y))
-//
-//            self.timerLabel.layer.add(animation, forKey: "position")
-//            self.timerLabel.text = formatTime
-//        }
-        self.timerLabel.text = formatTime
+    func timeMoved(timeToSeconds: Int) {
+        let timeFormat: [String] = secondsToHoursMinutesSeconds(seconds: timeToSeconds).map {val in
+            if val < 10{
+                return "0\(val)"
+            }else{
+                return "\(val)"
+            }
+        }
+        self.timerLabel.text = timeFormat.joined(separator: ":")
+    }
+
+}
+
+private extension ExampleViewController {
+    func secondsToHoursMinutesSeconds (seconds : Int) -> [Int] {
+      return [seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60]
     }
 }
