@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-internal class TimeToucherCalculation {
+class TimeToucherCalculation {
     
     //MARK: frontTouchArcArray
     static func frontTouchArcArray(touchPoint: CGPoint, circleCenter: CGPoint, circleRadius: CGFloat, countPoint: Int) -> [CGPoint]{

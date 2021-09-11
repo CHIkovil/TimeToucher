@@ -7,7 +7,7 @@
 
 import Foundation
 
-internal struct TimeFormat{
+struct TimeFormat{
     var seconds:Int
     var minutes:Int
     var hours:Int

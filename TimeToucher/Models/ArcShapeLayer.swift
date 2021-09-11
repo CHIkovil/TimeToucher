@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-internal struct ArcShapeLayer {
+struct ArcShapeLayer {
     let time: CAShapeLayer
     let background: CAShapeLayer
 }

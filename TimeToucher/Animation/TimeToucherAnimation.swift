@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-internal class TimeToucherAnimation {
+class TimeToucherAnimation {
     
     static func arc(arcSetup: ATimeToucher) -> CABasicAnimation{
         let animation = CABasicAnimation(keyPath: "transform.rotation")

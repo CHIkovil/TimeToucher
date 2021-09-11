@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-internal struct TouchAnimationSetup {
+struct TouchAnimationSetup {
     let point: CGPoint
     let arc: ATimeToucher
     let arcName: String

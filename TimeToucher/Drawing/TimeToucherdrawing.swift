@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-internal class TimeToucherDrawing {
+class TimeToucherDrawing {
     
     static func arc(center: CGPoint, arcSetup: ATimeToucher) -> ArcShapeLayer{
         let aDegree = CGFloat.pi / 180
