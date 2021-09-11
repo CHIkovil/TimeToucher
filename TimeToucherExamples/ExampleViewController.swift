@@ -20,6 +20,9 @@ class ExampleViewController: UIViewController {
         view.alpha = 0.85
         view.backgroundColor = #colorLiteral(red: 0.978312552, green: 0.9784759879, blue: 0.9782910943, alpha: 1)
         
+        view.arcsSetup.hourArc.color = .lightGray
+        view.arcsSetup.minuteArc.color = .lightGray
+        view.arcsSetup.secondArc.color = .lightGray
         view.delegate = self
         
         return view
@@ -38,6 +41,7 @@ class ExampleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
         view.addSubview(timerView)
         view.addSubview(timerLabel)
         
@@ -79,7 +83,7 @@ extension ExampleViewController: TimeToucherDelegate{
 
 }
 
-private extension ExampleViewController {
+extension ExampleViewController {
     func secondsToHoursMinutesSeconds (seconds : Int) -> [Int] {
       return [seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60]
     }

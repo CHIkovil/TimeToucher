@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 internal class TimeToucherAnimation {
+    
     static func arc(arcSetup: ATimeToucher) -> CABasicAnimation{
         let animation = CABasicAnimation(keyPath: "transform.rotation")
         animation.byValue = NSNumber(floatLiteral: Double(CGFloat.pi * 2))
@@ -27,7 +28,7 @@ internal class TimeToucherAnimation {
         animation.isRemovedOnCompletion = true
         return animation
     }
-
+    
     static func arcTouches(toAngle: CGFloat) -> CATransform3D{
         let radians = CGFloat(toAngle * .pi/180)
         let rotationTransform = CATransform3DMakeRotation(radians, 0.0, 0.0, 1.0)

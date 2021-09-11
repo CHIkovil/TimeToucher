@@ -13,4 +13,5 @@ internal struct TouchAnimationSetup {
     let arc: ATimeToucher
     let arcName: String
     let circleCenter: CGPoint
+    let arcIndex: Int
 }
