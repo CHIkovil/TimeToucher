@@ -10,8 +10,8 @@ import UIKit
 
 internal class TimeToucherCalculation {
     
-    //MARK: FrontTouchArcArray
-    static func FrontTouchArcArray(touchPoint: CGPoint, circleCenter: CGPoint, circleRadius: CGFloat, countPoint: Int) -> [CGPoint]{
+    //MARK: frontTouchArcArray
+    static func frontTouchArcArray(touchPoint: CGPoint, circleCenter: CGPoint, circleRadius: CGFloat, countPoint: Int) -> [CGPoint]{
         let distanceBetweenCirclesCenter = touchPoint.distance(to: circleCenter)
         
         let distanceToCircleTangencyPoint = distanceToCircleTangencyPoint(distanceBetweenCirclesCenter:distanceBetweenCirclesCenter, circleRadius: circleRadius)

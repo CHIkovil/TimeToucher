@@ -187,7 +187,7 @@ private extension TimeToucher{
     5) add lines to sublayers for main view
      */
     func animateLines(touchAnimationSetup: TouchAnimationSetup){
-        let arrayFrontArc = TimeToucherCalculation.arrayFrontTouchArc(touchPoint: touchAnimationSetup.point, circleCenter: CGPoint(x: frame.size.width/2, y: frame.size.height/2), circleRadius: touchAnimationSetup.arc.radius + touchAnimationSetup.arc.lineWidth / 2, countPoint: touchAnimationSetup.arc.animationLineSetup.count)
+        let arrayFrontArc = TimeToucherCalculation.frontTouchArcArray(touchPoint: touchAnimationSetup.point, circleCenter: CGPoint(x: frame.size.width/2, y: frame.size.height/2), circleRadius: touchAnimationSetup.arc.radius + touchAnimationSetup.arc.lineWidth / 2, countPoint: touchAnimationSetup.arc.animationLineSetup.count)
         
         for frontPoint in arrayFrontArc{
             let random2Points = TimeToucherCalculation.random2PointsOnLine(start: frontPoint, end: touchAnimationSetup.point)
