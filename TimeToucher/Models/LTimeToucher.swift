@@ -9,8 +9,15 @@ import Foundation
 import UIKit
 
 public struct LTimeToucher {
-    public var count: Int
-    public var animationDuration: Double
-    public var width: CGFloat
-    public var color: UIColor?
+    let count: Int
+    let animationDuration: Double
+    let width: CGFloat
+    let color: UIColor?
+    
+    public init(count: Int, animationDuration: Double, width: CGFloat, color: UIColor?) {
+        self.count = count
+        self.animationDuration = animationDuration
+        self.width = width
+        self.color = color
+    }
 }

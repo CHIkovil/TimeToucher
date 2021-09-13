@@ -20,9 +20,6 @@ class ExampleViewController: UIViewController {
         view.alpha = 0.85
         view.backgroundColor = #colorLiteral(red: 0.978312552, green: 0.9784759879, blue: 0.9782910943, alpha: 1)
         
-        view.arcsSetup.hourArc.color = .lightGray
-        view.arcsSetup.minuteArc.color = .lightGray
-        view.arcsSetup.secondArc.color = .lightGray
         view.delegate = self
         
         return view
@@ -51,7 +48,20 @@ class ExampleViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        timerView.animateArcs()
+        timerView.animateArcs(setup: setup())
+    }
+    
+    public func setup() -> ASTimeToucher {
+        let secondLine = LTimeToucher(count: 10, animationDuration: 0.1, width: 8, color: nil)
+        let secondArc = ATimeToucher(percentage: 40, lineWidth: 20, radius: 30, startDegree: 0, color: .lightGray, backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1), animationDuration: 6, animationLineSetup: secondLine)
+        
+        let minuteLine = LTimeToucher(count: 10, animationDuration: 0.1, width: 8, color: nil)
+        let minuteArc = ATimeToucher(percentage: 40, lineWidth: 30, radius: 60, startDegree: 70, color: .lightGray, backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1),  animationDuration: 4, animationLineSetup: minuteLine)
+        
+        let hourLine = LTimeToucher(count: 10, animationDuration: 0.1, width: 8, color: nil)
+        let hourArc = ATimeToucher(percentage: 40, lineWidth: 40, radius: 100, startDegree: 180, color: .lightGray, backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1),  animationDuration: 2, animationLineSetup: hourLine)
+        
+        return ASTimeToucher(secondArc: secondArc, minuteArc: minuteArc, hourArc: hourArc)
     }
     
     func createConstraintsTimerView() {

@@ -9,9 +9,15 @@ import Foundation
 import UIKit
 
 public struct ASTimeToucher {
-    public var secondArc: ATimeToucher
-    public var minuteArc: ATimeToucher
-    public var hourArc: ATimeToucher
+    let secondArc: ATimeToucher
+    let minuteArc: ATimeToucher
+    let hourArc: ATimeToucher
+    
+    public init(secondArc: ATimeToucher, minuteArc: ATimeToucher, hourArc: ATimeToucher) {
+        self.secondArc = secondArc
+        self.minuteArc = minuteArc
+        self.hourArc = hourArc
+    }
     
     internal var directory: [String:ATimeToucher] {
         return [ "secondArc" : secondArc, "minuteArc" : minuteArc, "hourArc" : hourArc]

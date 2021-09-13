@@ -12,45 +12,55 @@ public protocol TimeToucherDelegate:NSObjectProtocol {
     func timeMoved(timeToSeconds: Int)
 }
 
-
 public final class TimeToucher: UIView {
     let name = "TimeToucher"
     
     //MARK: public user block
     weak public var delegate: TimeToucherDelegate?
-    
-    public lazy var arcsSetup: ASTimeToucher = {
         
-        let secondLine = LTimeToucher(count: 10, animationDuration: 0.1, width: 8)
-        let secondArc = ATimeToucher(percentage: 40, lineWidth: 20, radius: 30, startDegree: 0, color: .random, backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1), animationDuration: 6, animationLineSetup: secondLine)
-        
-        let minuteLine = LTimeToucher(count: 10, animationDuration: 0.1, width: 8)
-        let minuteArc = ATimeToucher(percentage: 40, lineWidth: 30, radius: 60, startDegree: 70, color: .random, backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1),  animationDuration: 4, animationLineSetup: minuteLine)
-        
-        let hourLine = LTimeToucher(count: 10, animationDuration: 0.1, width: 8)
-        let hourArc = ATimeToucher(percentage: 40, lineWidth: 40, radius: 100, startDegree: 180, color: .random,backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1),  animationDuration: 2, animationLineSetup: hourLine)
-        
-        return ASTimeToucher(secondArc: secondArc, minuteArc: minuteArc, hourArc: hourArc)
-    }()
-    
     /*This method:
     1) create 6 circle arcs(TimeToucherDrawing.arc() give 2 default arcs full background and part time). Set bounds time arc needs for rotate animation(position set in TimeToucherDrawing.arc() method)
     2) add infinity rotate animation for time arcs
     3) add arcs to sublayers for main view */
-    public func animateArcs(){
+    public func animateArcs(setup: ASTimeToucher){
+        arcsSetup = setup
         self.isMultipleTouchEnabled = true
         
         for arc in arcsSetup.directory{
-            let arcShapeLayer = TimeToucherDrawing.arc(center: CGPoint(x: frame.size.width/2, y: frame.size.height/2), arcSetup: arc.value)
-            arcShapeLayer.time.bounds = self.layer.bounds
-            arcShapeLayer.time.name = arc.key
-            arcShapeLayer.background.name = "back\(arc.key)"
+            let aDegree = CGFloat.pi / 180
             
-            let arcAnimation = TimeToucherAnimation.arc(arcSetup: arc.value)
-            arcShapeLayer.time.add(arcAnimation, forKey: arc.key)
+            let backgroundShapeLayer = CAShapeLayer()
+            backgroundShapeLayer.path = UIBezierPath(arcCenter: CGPoint(x: frame.size.width/2, y: frame.size.height/2),
+                                                     radius: arc.value.radius,
+                                                startAngle: 0,
+                                                endAngle: .pi * 2,
+                                                clockwise: true).cgPath
+            backgroundShapeLayer.strokeColor = arc.value.backgroundColor.cgColor
+            backgroundShapeLayer.lineWidth = arc.value.lineWidth
+            backgroundShapeLayer.fillColor = UIColor.clear.cgColor
+            backgroundShapeLayer.name = "back\(arc.key)"
             
-            self.layer.addSublayer(arcShapeLayer.background)
-            self.layer.addSublayer(arcShapeLayer.time)
+            let timeShapeLayer = CAShapeLayer()
+            timeShapeLayer.path = UIBezierPath(arcCenter: CGPoint(x: frame.size.width/2, y: frame.size.height/2),
+                                               radius: arc.value.radius,
+                                               startAngle: aDegree * arc.value.startDegree,
+                                               endAngle: aDegree * (arc.value.startDegree + 360 * arc.value.percentage / 100),
+                                          clockwise: true).cgPath
+            timeShapeLayer.strokeColor  = arc.value.color.cgColor
+            timeShapeLayer.lineWidth = arc.value.lineWidth
+            timeShapeLayer.fillColor = UIColor.clear.cgColor
+            timeShapeLayer.position = CGPoint(x: frame.size.width/2, y: frame.size.height/2)
+            timeShapeLayer.bounds = self.layer.bounds
+            timeShapeLayer.name = arc.key
+            
+            let animation = CABasicAnimation(keyPath: "transform.rotation")
+            animation.byValue = NSNumber(floatLiteral: Double(CGFloat.pi * 2))
+            animation.duration = arc.value.animationDuration
+            animation.repeatCount = .infinity
+            timeShapeLayer.add(animation, forKey: arc.key)
+            
+            self.layer.addSublayer(backgroundShapeLayer)
+            self.layer.addSublayer(timeShapeLayer)
         }
     }
     
@@ -72,6 +82,8 @@ public final class TimeToucher: UIView {
     
 
     //MARK: private main block
+    private var arcsSetup: ASTimeToucher!
+    
     private var timeFormat: TimeFormat = {
         return TimeFormat(seconds: 0, minutes: 0, hours: 0)
     }()
@@ -107,7 +119,6 @@ public final class TimeToucher: UIView {
         }
     }
 }
-
 
 //MARK: private extension
 private extension TimeToucher{
@@ -161,20 +172,24 @@ private extension TimeToucher{
     1) reboot time arc rotate animation (when going beyond the borders and touches event ended) */
     func rebootArcAnimation(touchAnimationSetup: TouchAnimationSetup){
         let arcSetup = arcsSetup.directory[touchAnimationSetup.arcName]
-        let arcAnimation = TimeToucherAnimation.arc(arcSetup: arcSetup!)
+        let animation = CABasicAnimation(keyPath: "transform.rotation")
+        animation.byValue = NSNumber(floatLiteral: Double(CGFloat.pi * 2))
+        animation.duration = arcSetup!.animationDuration
+        animation.repeatCount = .infinity
         
-        self.layer.sublayers![touchAnimationSetup.arcIndex].add(arcAnimation, forKey: touchAnimationSetup.arcName)
+        self.layer.sublayers![touchAnimationSetup.arcIndex].add(animation, forKey: touchAnimationSetup.arcName)
     }
     
     //MARK: animateArcTouches
     /*This method:
-    1) set transform rotation for time arc (move after touch) */
+    1) set transform rotation for time arc (move time arc after touch) */
     func animateArcTouches(touchAnimationSetup: TouchAnimationSetup){
         let currentArcTransform: CATransform3D = self.layer.sublayers![touchAnimationSetup.arcIndex].presentation()!.transform
         
         let toAngle = TimeToucherCalculation.getRotateArcAngle(currentArcTransform: currentArcTransform, touchAnimationSetup: touchAnimationSetup)
         
-        let rotationTransform = TimeToucherAnimation.arcTouches(toAngle: toAngle)
+        let radians = CGFloat(toAngle * .pi/180)
+        let rotationTransform = CATransform3DMakeRotation(radians, 0.0, 0.0, 1.0)
         self.layer.sublayers![touchAnimationSetup.arcIndex].transform = rotationTransform
     }
     
@@ -191,10 +206,36 @@ private extension TimeToucher{
         
         for frontPoint in arrayFrontArc{
             let random2Points = TimeToucherCalculation.random2PointsOnLine(start: frontPoint, end: touchAnimationSetup.point)
-            let lineShapeLayer = TimeToucherDrawing.line(start: random2Points.0, end: random2Points.1, linesSetup: touchAnimationSetup.arc.animationLineSetup)
-            let lineAnimation = TimeToucherAnimation.line(lineSetup:touchAnimationSetup.arc.animationLineSetup)
-            lineShapeLayer.add(lineAnimation, forKey: nil)
-            self.layer.addSublayer(lineShapeLayer)
+      
+            let path = UIBezierPath()
+            
+            path.move(to: CGPoint(x: random2Points.0.x, y: random2Points.0.y))
+            path.addLine(to: CGPoint(x: random2Points.1.x,
+                                     y: random2Points.1.y))
+            
+            let shapeLayer = CAShapeLayer()
+            shapeLayer.path = path.cgPath
+            shapeLayer.fillColor = UIColor.clear.cgColor
+            if let color = touchAnimationSetup.arc.animationLineSetup.color{
+                shapeLayer.strokeColor = color.cgColor
+            }else{
+                shapeLayer.strokeColor = UIColor.random.cgColor
+            }
+            shapeLayer.lineWidth = touchAnimationSetup.arc.animationLineSetup.width
+            shapeLayer.lineCap = CAShapeLayerLineCap.round
+            shapeLayer.lineJoin = CAShapeLayerLineJoin.round
+            shapeLayer.strokeEnd = 0
+            
+            let animation = CABasicAnimation(keyPath: "strokeEnd")
+            animation.toValue = 1
+            animation.duration = touchAnimationSetup.arc.animationLineSetup.animationDuration
+            animation.timingFunction = CAMediaTimingFunction(
+                name: CAMediaTimingFunctionName.easeInEaseOut)
+            animation.fillMode = CAMediaTimingFillMode.both
+            animation.isRemovedOnCompletion = true
+            
+            shapeLayer.add(animation, forKey: nil)
+            self.layer.addSublayer(shapeLayer)
         }
     }
     
@@ -228,5 +269,16 @@ private extension TimeToucher{
         }
         
         self.delegate?.timeMoved(timeToSeconds: timeFormat.seconds + timeFormat.minutes * 60 + timeFormat.hours * 3600)
+    }
+}
+
+private extension UIColor {
+    static var random: UIColor {
+        return UIColor(
+            red: .random(in: 0...1),
+            green: .random(in: 0...1),
+            blue: .random(in: 0...1),
+            alpha: 0.9
+        )
     }
 }
