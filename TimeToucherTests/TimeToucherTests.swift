@@ -42,10 +42,16 @@ class TimeToucherTests: XCTestCase {
 
         // then
         XCTAssertNotNil(timeToucher.layer.sublayers, "sublayers must be not-nil")
-        XCTAssertEqual(timeToucher.layer.sublayers!.count, 6)
         
-        let animationSublayers = timeToucher.layer.sublayers!.filter { !($0.animationKeys()?.isEmpty ?? true)}
-        XCTAssertEqual(animationSublayers.count, 3)
+        let sublayers = timeToucher.layer.sublayers!
+        XCTAssertEqual(sublayers.count, 6, "count all sublayers must be 6")
+        
+        let frontSublayerNames = timeToucher.setup.directory.keys
+        let frontSublayers = sublayers.filter {frontSublayerNames.contains($0.name ?? "")}
+        XCTAssertEqual(frontSublayerNames.count, 3, "every name front sublayer must be exist and contains in keys setup directory ")
+    
+        let animationFrontSublayers = frontSublayers.filter { !($0.animationKeys()?.isEmpty ?? true)}
+        XCTAssertEqual(animationFrontSublayers.count, 3, "in every 3 front arcs must added at least 1 animation")
     }
 
     func testPerformanceExample() throws {

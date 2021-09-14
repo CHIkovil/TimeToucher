@@ -20,9 +20,10 @@
 		17675A8E26D6D57F00B5CC4A /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17675A8D26D6D57F00B5CC4A /* ExampleViewController.swift */; };
 		17675A9326D6D58000B5CC4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17675A9226D6D58000B5CC4A /* Assets.xcassets */; };
 		17675A9626D6D58000B5CC4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17675A9426D6D58000B5CC4A /* LaunchScreen.storyboard */; };
-		17E3300026DAA9BF004F5F52 /* ArcShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E32FFF26DAA9BF004F5F52 /* ArcShapeLayer.swift */; };
 		17E3300326DAC8A1004F5F52 /* TimeToucherCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E3300226DAC8A1004F5F52 /* TimeToucherCalculation.swift */; };
 		17E3300726DB08D6004F5F52 /* LTimeToucher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E3300626DB08D6004F5F52 /* LTimeToucher.swift */; };
+		17F8FB2926F100480016226D /* TimeToucherDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F8FB2826F100480016226D /* TimeToucherDrawing.swift */; };
+		17F8FB2C26F102C00016226D /* TimeToucherAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F8FB2B26F102C00016226D /* TimeToucherAnimation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,9 +55,10 @@
 		17675A9226D6D58000B5CC4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		17675A9526D6D58000B5CC4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		17675A9726D6D58000B5CC4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		17E32FFF26DAA9BF004F5F52 /* ArcShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcShapeLayer.swift; sourceTree = "<group>"; };
 		17E3300226DAC8A1004F5F52 /* TimeToucherCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToucherCalculation.swift; sourceTree = "<group>"; };
 		17E3300626DB08D6004F5F52 /* LTimeToucher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LTimeToucher.swift; sourceTree = "<group>"; };
+		17F8FB2826F100480016226D /* TimeToucherDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToucherDrawing.swift; sourceTree = "<group>"; };
+		17F8FB2B26F102C00016226D /* TimeToucherAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToucherAnimation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,8 @@
 		17675A6B26D6D55000B5CC4A /* TimeToucher */ = {
 			isa = PBXGroup;
 			children = (
+				17F8FB2A26F102970016226D /* Animation */,
+				17F8FB2726F100320016226D /* Drawing */,
 				17E3300126DAC868004F5F52 /* Сalculation */,
 				17E32FF826DAA427004F5F52 /* Models */,
 				17675A6C26D6D55000B5CC4A /* TimeToucher.h */,
@@ -154,7 +158,6 @@
 				17E3300626DB08D6004F5F52 /* LTimeToucher.swift */,
 				1766BABC26D982090074291E /* ASTimeToucher.swift */,
 				1713ED8E26D79BEB00770017 /* ATimeToucher.swift */,
-				17E32FFF26DAA9BF004F5F52 /* ArcShapeLayer.swift */,
 				1724450D26E66C11001E98AF /* TouchAnimationSetup.swift */,
 				1710283C26EBAC6D00C04259 /* TimeFormat.swift */,
 			);
@@ -167,6 +170,22 @@
 				17E3300226DAC8A1004F5F52 /* TimeToucherCalculation.swift */,
 			);
 			path = "Сalculation";
+			sourceTree = "<group>";
+		};
+		17F8FB2726F100320016226D /* Drawing */ = {
+			isa = PBXGroup;
+			children = (
+				17F8FB2826F100480016226D /* TimeToucherDrawing.swift */,
+			);
+			path = Drawing;
+			sourceTree = "<group>";
+		};
+		17F8FB2A26F102970016226D /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				17F8FB2B26F102C00016226D /* TimeToucherAnimation.swift */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 		17FD596026D95DE000B67EDE /* Frameworks */ = {
@@ -315,11 +334,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17E3300026DAA9BF004F5F52 /* ArcShapeLayer.swift in Sources */,
 				1710283D26EBAC6D00C04259 /* TimeFormat.swift in Sources */,
 				1766BABD26D982090074291E /* ASTimeToucher.swift in Sources */,
 				1724450E26E66C11001E98AF /* TouchAnimationSetup.swift in Sources */,
 				17E3300726DB08D6004F5F52 /* LTimeToucher.swift in Sources */,
+				17F8FB2C26F102C00016226D /* TimeToucherAnimation.swift in Sources */,
+				17F8FB2926F100480016226D /* TimeToucherDrawing.swift in Sources */,
 				17E3300326DAC8A1004F5F52 /* TimeToucherCalculation.swift in Sources */,
 				1713ED8D26D796BB00770017 /* TimeToucher.swift in Sources */,
 				1713ED8F26D79BEB00770017 /* ATimeToucher.swift in Sources */,
