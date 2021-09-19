@@ -68,15 +68,8 @@ public final class TimeToucher: UIView {
         let touchAnimationSetup = touchAnimationSetup(touches: touches, setup: setup)
    
         if checkTouchNotInBounds(touchPoint: touchAnimationSetup.point, setup: setup) || ["Cancelled", "Ended"].contains(touchesName) || touches.count > 3{
-            self.layer.sublayers![touchAnimationSetup.arcIndex].removeAllAnimations()
-            let currentArcTransform: CATransform3D = self.layer.sublayers![touchAnimationSetup.arcIndex].presentation()!.transform
-            let currentArcAngle = atan2(currentArcTransform.m12, currentArcTransform.m11)
-            self.layer.sublayers![touchAnimationSetup.arcIndex].transform = CATransform3DMakeRotation(currentArcAngle, 0, 0, 1)
-            rebootArcAnimation(touchAnimationSetup: touchAnimationSetup,setup: setup)
-            self.layer.sublayers?.removeSubrange(6...)
-            return
+            rebootArcAnimation(touchAnimationSetup: touchAnimationSetup)
         }else{
-            self.layer.sublayers![touchAnimationSetup.arcIndex].removeAllAnimations()
             animateArcTouches(touchAnimationSetup: touchAnimationSetup)
             animateLines(touchAnimationSetup: touchAnimationSetup)
             setTime(touchAnimationSetup: touchAnimationSetup)
@@ -134,8 +127,18 @@ extension TimeToucher{
     //MARK: rebootArcAnimation
     /*This method:
     1) reboot time arc rotate animation (when going beyond the borders and touches event ended) */
-    func rebootArcAnimation(touchAnimationSetup: TouchAnimationSetup, setup: ASTimeToucher){
-        let arcSetup = setup.directory[touchAnimationSetup.arcName]!
+    func rebootArcAnimation(touchAnimationSetup: TouchAnimationSetup){
+        self.layer.sublayers?.removeSubrange(6...)
+        
+        let currentArcTransform: CATransform3D = self.layer.sublayers![touchAnimationSetup.arcIndex].presentation()!.transform
+        
+        let currentArcAngle = TimeToucherCalculation.getRotateArcAngle(currentArcTransform: currentArcTransform, touchAnimationSetup: touchAnimationSetup, isTouch: false)
+        
+        let rotationTransform = TimeToucherAnimation.rotateArc(toAngle: currentArcAngle)
+        self.layer.sublayers![touchAnimationSetup.arcIndex].transform = rotationTransform
+  
+        
+        let arcSetup = touchAnimationSetup.arc
         let animation = TimeToucherAnimation.infinityRotateArc(setup: arcSetup)
         
         self.layer.sublayers![touchAnimationSetup.arcIndex].add(animation, forKey: touchAnimationSetup.arcName)
@@ -145,9 +148,10 @@ extension TimeToucher{
     /*This method:
     1) set transform rotation for time arc (move time arc after touch) */
     func animateArcTouches(touchAnimationSetup: TouchAnimationSetup){
+        self.layer.sublayers![touchAnimationSetup.arcIndex].removeAllAnimations()
         let currentArcTransform: CATransform3D = self.layer.sublayers![touchAnimationSetup.arcIndex].presentation()!.transform
         
-        let toAngle = TimeToucherCalculation.getRotateArcAngle(currentArcTransform: currentArcTransform, touchAnimationSetup: touchAnimationSetup)
+        let toAngle = TimeToucherCalculation.getRotateArcAngle(currentArcTransform: currentArcTransform, touchAnimationSetup: touchAnimationSetup, isTouch: true)
         
         let rotationTransform = TimeToucherAnimation.rotateArc(toAngle: toAngle)
         self.layer.sublayers![touchAnimationSetup.arcIndex].transform = rotationTransform

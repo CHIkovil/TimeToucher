@@ -8,7 +8,7 @@
 import XCTest
 @testable import TimeToucher
 
-class TimeToucherTests: XCTestCase {
+  class TimeToucherTests: XCTestCase {
     
     var timeToucher: TimeToucher!
     let touches = Set([UITouch()])

@@ -80,16 +80,20 @@ class TimeToucherCalculation {
      }
     
     //MARK: getRotateArcAngle
-    static func getRotateArcAngle(currentArcTransform: CATransform3D, touchAnimationSetup: TouchAnimationSetup ) -> CGFloat {
-        let currentArcAngle = atan2(currentArcTransform.m12, currentArcTransform.m11)
-        
-        let startArcAngle = touchAnimationSetup.arc.startDegree
-        let endArcAngle = touchAnimationSetup.arc.startDegree + 360 * touchAnimationSetup.arc.percentage / 100
-        
-        let centerArcAngle = (endArcAngle - startArcAngle) / 2
-        
-        let toAngle =  angleToPoint(touchPoint: touchAnimationSetup.point, circleCenter: touchAnimationSetup.circleCenter) - currentArcAngle - centerArcAngle
-        return toAngle
+    static func getRotateArcAngle(currentArcTransform: CATransform3D, touchAnimationSetup: TouchAnimationSetup, isTouch: Bool) -> CGFloat {
+        switch isTouch {
+        case true:
+            let startArcAngle = touchAnimationSetup.arc.startDegree
+            let endArcAngle = touchAnimationSetup.arc.startDegree + 360 * touchAnimationSetup.arc.percentage / 100
+            
+            let centerArcAngle = (endArcAngle - startArcAngle) / 2
+            
+            let toAngle =  angleToPoint(touchPoint: touchAnimationSetup.point, circleCenter: touchAnimationSetup.circleCenter) - centerArcAngle
+            return toAngle
+        default:
+            let currentArcRadians = atan2(currentArcTransform.m12, currentArcTransform.m11)
+            return currentArcRadians * (180 / .pi)
+        }
     }
 }
 
