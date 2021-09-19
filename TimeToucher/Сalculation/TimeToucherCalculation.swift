@@ -80,7 +80,11 @@ class TimeToucherCalculation {
      }
     
     //MARK: getRotateArcAngle
-    static func getRotateArcAngle(currentArcTransform: CATransform3D, touchAnimationSetup: TouchAnimationSetup, isTouch: Bool) -> CGFloat {
+    static func getRotateArcAngle(currentArcTransform: CATransform3D?, touchAnimationSetup: TouchAnimationSetup, isTouch: Bool) -> CGFloat {
+        guard let currentArcTransform = currentArcTransform else {
+            return 0
+        }
+      
         switch isTouch {
         case true:
             let startArcAngle = touchAnimationSetup.arc.startDegree

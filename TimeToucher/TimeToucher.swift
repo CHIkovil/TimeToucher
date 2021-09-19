@@ -38,22 +38,22 @@ public final class TimeToucher: UIView {
     
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let points = touches.map {return $0.location(in: self)}
-        switchTouches(touchesName: "Began", points: points)
+        switchTouches(isReboot: false, points: points)
     }
     
     public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let points = touches.map {return $0.location(in: self)}
-        switchTouches(touchesName: "Moved", points: points)
+        switchTouches(isReboot: false, points: points)
     }
     
     public override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         let points = touches.map {return $0.location(in: self)}
-        switchTouches(touchesName: "Cancelled", points: points)
+        switchTouches(isReboot: true, points: points)
     }
     
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let points = touches.map {return $0.location(in: self)}
-        switchTouches(touchesName: "Ended", points: points)
+        switchTouches(isReboot: true, points: points)
     }
     
 
@@ -67,11 +67,11 @@ public final class TimeToucher: UIView {
     /*This method:
     1) set touch reaction
     2) check touch bounds */
-    func switchTouches(touchesName: String, points: [CGPoint]){
+    func switchTouches(isReboot: Bool, points: [CGPoint]){
         guard let setup = setup else {return}
         let touchAnimationSetup = touchAnimationSetup(points: points, setup: setup)
    
-        if checkTouchNotInBounds(touchPoint: touchAnimationSetup.point, setup: setup) || ["Cancelled", "Ended"].contains(touchesName) || points.count > 3{
+        if checkTouchNotInBounds(touchPoint: touchAnimationSetup.point, setup: setup) || isReboot || points.count > 3{
             rebootArcAnimation(touchAnimationSetup: touchAnimationSetup)
         }else{
             animateArcTouches(touchAnimationSetup: touchAnimationSetup)
@@ -129,11 +129,11 @@ extension TimeToucher{
     
     //MARK: rebootArcAnimation
     /*This method:
-    1) reboot time arc rotate animation (when going beyond the borders and touches event ended) */
+    1) reboot time arc rotate animation (when going beyond the borders and touches event ended,cancelled) */
     func rebootArcAnimation(touchAnimationSetup: TouchAnimationSetup){
         self.layer.sublayers?.removeSubrange(6...)
         
-        let currentArcTransform: CATransform3D = self.layer.sublayers![touchAnimationSetup.arcIndex].presentation()!.transform
+        let currentArcTransform = self.layer.sublayers![touchAnimationSetup.arcIndex].presentation()?.transform
         
         let currentArcAngle = TimeToucherCalculation.getRotateArcAngle(currentArcTransform: currentArcTransform, touchAnimationSetup: touchAnimationSetup, isTouch: false)
         
@@ -152,7 +152,7 @@ extension TimeToucher{
     1) set transform rotation for time arc (move time arc after touch) */
     func animateArcTouches(touchAnimationSetup: TouchAnimationSetup){
         self.layer.sublayers![touchAnimationSetup.arcIndex].removeAllAnimations()
-        let currentArcTransform: CATransform3D = self.layer.sublayers![touchAnimationSetup.arcIndex].presentation()!.transform
+        let currentArcTransform = self.layer.sublayers![touchAnimationSetup.arcIndex].presentation()?.transform
         
         let toAngle = TimeToucherCalculation.getRotateArcAngle(currentArcTransform: currentArcTransform, touchAnimationSetup: touchAnimationSetup, isTouch: true)
         

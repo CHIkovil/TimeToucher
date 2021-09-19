@@ -11,7 +11,7 @@ import XCTest
   class TimeToucherTests: XCTestCase {
     
     var timeToucher: TimeToucher!
-    let touches = Set([UITouch()])
+  
     let setup: ASTimeToucher = {
         let secondLine = LTimeToucher(count: 10, animationDuration: 0.1, width: 8, color: nil)
         let secondArc = ATimeToucher(percentage: 40, lineWidth: 20, radius: 30, startDegree: 0, color: .lightGray, backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1), animationDuration: 6, animationLineSetup: secondLine)
@@ -63,6 +63,8 @@ import XCTest
     }
     
     func testTouches() {
+        // given
+        let touches = Set([UITouch()])
         // when
         timeToucher.touchesBegan(touches, with: nil)
         timeToucher.touchesMoved(touches, with: nil)
@@ -70,14 +72,31 @@ import XCTest
         timeToucher.touchesEnded(touches, with: nil)
     }
     
-    func testTouchAnimationSetup() {
+    func testSwitchTouchesIf1TouchInBoundsForTouches() {
+        // given
+        let point = CGPoint(x: 10, y: 10)
+        timeToucher.bounds = CGRect(x: 0, y: 0, width: 400, height: 400)
+        
         // when
         timeToucher.animateArcs(setup: setup)
-        let animationSetup = timeToucher.touchAnimationSetup(touches: touches, setup: setup)
+        timeToucher.switchTouches(isReboot: false, points: [point])
         
         // then
-        XCTAssertEqual(animationSetup.arcName , "secondArc")
+        XCTAssertTrue(timeToucher.timeFormat.seconds != 0, "point(one touch) in touch bounds but seconds timer not moved")
     }
+    
+    func testSwitchTouchesIf1TouchInTimeCirclesCenter() {
+        // given
+        let point = CGPoint(x: 200, y: 200)
+        
+        // when
+        timeToucher.animateArcs(setup: setup)
+        timeToucher.switchTouches(isReboot: false, points: [point])
+        
+        // then
+        XCTAssertTrue(timeToucher.timeFormat.seconds == 0, "point(one touch) in center time circles but seconds timer moved")
+    }
+    
     
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
