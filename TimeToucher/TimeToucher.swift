@@ -37,19 +37,23 @@ public final class TimeToucher: UIView {
     }
     
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        switchTouches(touchesName: "Began", touches: touches)
+        let points = touches.map {return $0.location(in: self)}
+        switchTouches(touchesName: "Began", points: points)
     }
     
     public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        switchTouches(touchesName: "Moved", touches: touches)
+        let points = touches.map {return $0.location(in: self)}
+        switchTouches(touchesName: "Moved", points: points)
     }
     
     public override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        switchTouches(touchesName: "Cancelled", touches: touches)
+        let points = touches.map {return $0.location(in: self)}
+        switchTouches(touchesName: "Cancelled", points: points)
     }
     
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        switchTouches(touchesName: "Ended", touches: touches)
+        let points = touches.map {return $0.location(in: self)}
+        switchTouches(touchesName: "Ended", points: points)
     }
     
 
@@ -63,11 +67,11 @@ public final class TimeToucher: UIView {
     /*This method:
     1) set touch reaction
     2) check touch bounds */
-    func switchTouches(touchesName: String, touches: Set<UITouch>){
+    func switchTouches(touchesName: String, points: [CGPoint]){
         guard let setup = setup else {return}
-        let touchAnimationSetup = touchAnimationSetup(touches: touches, setup: setup)
+        let touchAnimationSetup = touchAnimationSetup(points: points, setup: setup)
    
-        if checkTouchNotInBounds(touchPoint: touchAnimationSetup.point, setup: setup) || ["Cancelled", "Ended"].contains(touchesName) || touches.count > 3{
+        if checkTouchNotInBounds(touchPoint: touchAnimationSetup.point, setup: setup) || ["Cancelled", "Ended"].contains(touchesName) || points.count > 3{
             rebootArcAnimation(touchAnimationSetup: touchAnimationSetup)
         }else{
             animateArcTouches(touchAnimationSetup: touchAnimationSetup)
@@ -85,15 +89,14 @@ extension TimeToucher{
     /*This method:
     1) calculation touch center if 3 or 2 touches
     2) gives unified animation setting for other methods  */
-    func touchAnimationSetup(touches: Set<UITouch>, setup: ASTimeToucher) -> TouchAnimationSetup {
-        let touchesLocation = touches.map { return $0.location(in: self)}
-        var touchPoint = touchesLocation.first!
+    func touchAnimationSetup(points: [CGPoint], setup: ASTimeToucher) -> TouchAnimationSetup {
+        var touchPoint = points.first!
         var touchArc = setup.secondArc
         var touchArcName = "secondArc"
         
-        switch touches.count {
+        switch points.count {
         case 3:
-            guard let touchCenter = TimeToucherCalculation.circleCenterTouch3Point(a: touchesLocation[0], b: touchesLocation[1], c: touchesLocation[2]) else {
+            guard let touchCenter = TimeToucherCalculation.circleCenterTouch3Point(a: points[0], b: points[1], c: points[2]) else {
                 fallthrough
             }
             touchArc = setup.hourArc
@@ -102,7 +105,7 @@ extension TimeToucher{
         case 2:
             touchArc = setup.minuteArc
             touchArcName = "minuteArc"
-            touchPoint = TimeToucherCalculation.circleCenterTouch2Point(a: touchesLocation[0], b: touchesLocation[1])
+            touchPoint = TimeToucherCalculation.circleCenterTouch2Point(a: points[0], b: points[1])
         default:break
         }
         
