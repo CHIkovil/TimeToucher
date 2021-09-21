@@ -187,14 +187,13 @@ extension TimeToucher{
     func setTime(touchAnimationSetup: TouchAnimationSetup){
         var touchAngle = TimeToucherCalculation.angleToPoint(touchPoint: touchAnimationSetup.point, circleCenter: touchAnimationSetup.circleCenter) + 90
         
-        if touchAngle >= 360{
+        if touchAngle > 360{
             touchAngle = touchAngle - 360
         }
         
         switch touchAnimationSetup.arcName {
         case "secondArc", "minuteArc":
-            var timeNumber = Int(touchAngle) / 6
-            if timeNumber == 60 {timeNumber -= 1}
+            let timeNumber = Int(touchAngle) / 6
               
             if touchAnimationSetup.arcName == "secondArc"{
                 timeFormat.seconds = timeNumber
@@ -203,8 +202,7 @@ extension TimeToucher{
             }
             
         case "hourArc":
-            var timeNumber = Int(touchAngle) / 15
-            if timeNumber == 24 {timeNumber -= 1}
+            let timeNumber = Int(touchAngle) / 15
             
             timeFormat.hours = timeNumber
         default:break
