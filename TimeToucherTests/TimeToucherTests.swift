@@ -134,7 +134,7 @@ import XCTest
         let touchAnimationSetupFor3Touches = timeToucher.touchAnimationSetup(points: points3, setup: setup)
         
         // then
-        XCTAssertTrue(touchAnimationSetupFor3Touches.arcName == "minuteArc", "the calculation is not replaced by the calculation of the center for two touches)
+        XCTAssertTrue(touchAnimationSetupFor3Touches.arcName == "minuteArc", "the calculation is not replaced by the calculation of the center for two touches")
     }
     
     func testDrawingLine() {
@@ -149,6 +149,7 @@ import XCTest
         // then
         XCTAssertTrue(shapeLayer.strokeColor == UIColor.lightGray.cgColor, "personal color for line not setted")
     }
+    
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.

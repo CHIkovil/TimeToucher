@@ -187,9 +187,8 @@ extension TimeToucher{
     func setTime(touchAnimationSetup: TouchAnimationSetup){
         var touchAngle = TimeToucherCalculation.angleToPoint(touchPoint: touchAnimationSetup.point, circleCenter: touchAnimationSetup.circleCenter) + 90
         
-        if touchAngle > 360{
-            touchAngle = touchAngle - 360
-        }
+        let item = touchAngle
+        touchAngle = touchAngle >= 360 ? touchAngle - 360 : item
         
         switch touchAnimationSetup.arcName {
         case "secondArc", "minuteArc":

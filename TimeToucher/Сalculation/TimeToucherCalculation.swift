@@ -57,14 +57,10 @@ class TimeToucherCalculation {
         let a = (start.y - end.y)/(start.x - end.x)
         let b = start.y - a * start.x
         
-        var random2Numbers:[CGFloat] = []
-        for _ in 0..<2{
-            if start.x < end.x{
-                random2Numbers.append(CGFloat.random(in: start.x...end.x))
-            }else{
-                random2Numbers.append(CGFloat.random(in: end.x...start.x))
-            }
+        let random2Numbers = [CGFloat](repeating: CGFloat(), count: 2).map { _ in
+            return  start.x < end.x ? CGFloat.random(in: start.x...end.x) : CGFloat.random(in: end.x...start.x)
         }
+  
         let random2Points = random2Numbers.map {CGPoint(x: $0, y: a * $0 + b)}
         return (random2Points[0], random2Points[1])
     }
@@ -135,11 +131,7 @@ private extension TimeToucherCalculation {
     static func frontArcArray(anglesTangency2Point: (start: CGFloat, end: CGFloat), countPoint: Int, circleRadius: CGFloat, circleCenter: CGPoint) -> [CGPoint] {
         
         let startAngle = anglesTangency2Point.start
-        var endAngle = anglesTangency2Point.end
-        
-        if endAngle < startAngle{
-            endAngle = 360 + endAngle
-        }
+        let endAngle = anglesTangency2Point.end < anglesTangency2Point.start ? 360 + anglesTangency2Point.end : anglesTangency2Point.end
         
         let angleStep = ((endAngle - startAngle) / CGFloat(countPoint + 1)).rounded(.down)
        
@@ -148,10 +140,9 @@ private extension TimeToucherCalculation {
         var count = 0
         
         while angle < endAngle && count < countPoint{
-            if angle >= 360{
-                let remainderAngle = angle - 360
-                angle = remainderAngle
-            }
+            let item = angle
+            angle = item >= 360 ? item - 360 : item
+            
             let radians = angle * CGFloat.pi / 180
             let x = circleCenter.x + circleRadius * cos(radians)
             let y = circleCenter.y + circleRadius * sin(radians)
