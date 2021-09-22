@@ -150,6 +150,21 @@ import XCTest
         XCTAssertTrue(shapeLayer.strokeColor == UIColor.lightGray.cgColor, "personal color for line not setted")
     }
     
+    func testGetRotateArcAngleIfNotNilTransformArg() {
+        // given
+        var transform = CATransform3D()
+        transform.m11 = 0.1
+        transform.m12 = 0.2
+        
+        let points3 = [CGPoint](repeating: CGPoint(x: 380, y: 20), count: 3)
+        
+        // when
+        timeToucher.animateArcs(setup: setup)
+        let touchAnimationSetupFor3Touches = timeToucher.touchAnimationSetup(points: points3, setup: setup)
+        
+        let _ = TimeToucherCalculation.getRotateArcAngle(currentArcTransform: CATransform3D(), touchAnimationSetup: touchAnimationSetupFor3Touches, isTouch: true)
+        let _ = TimeToucherCalculation.getRotateArcAngle(currentArcTransform: transform, touchAnimationSetup: touchAnimationSetupFor3Touches, isTouch: false)
+    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
