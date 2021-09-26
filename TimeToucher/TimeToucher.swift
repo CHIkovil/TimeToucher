@@ -190,8 +190,8 @@ extension TimeToucher{
         let item = touchAngle
         touchAngle = touchAngle >= 360 ? touchAngle - 360 : item
         
-        switch touchAnimationSetup.arcName {
-        case "secondArc", "minuteArc":
+        if ["secondArc", "minuteArc"].contains(touchAnimationSetup.arcName)
+        {
             let timeNumber = Int(touchAngle) / 6
               
             if touchAnimationSetup.arcName == "secondArc"{
@@ -199,12 +199,10 @@ extension TimeToucher{
             }else{
                 timeFormat.minutes = timeNumber
             }
-            
-        case "hourArc":
+        }else{
             let timeNumber = Int(touchAngle) / 15
             
             timeFormat.hours = timeNumber
-        default:break
         }
         
         self.delegate?.timeMoved(timeToSeconds: timeFormat.seconds + timeFormat.minutes * 60 + timeFormat.hours * 3600)
