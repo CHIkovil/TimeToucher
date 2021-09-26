@@ -133,14 +133,14 @@
 		17675A8826D6D57F00B5CC4A /* TimeToucherExamples */ = {
 			isa = PBXGroup;
 			children = (
-				17C71A6A26D6E36B00136CA3 /* SupFiles */,
+				17C71A6A26D6E36B00136CA3 /* Support */,
 				17675A8D26D6D57F00B5CC4A /* ExampleViewController.swift */,
 				17675A9726D6D58000B5CC4A /* Info.plist */,
 			);
 			path = TimeToucherExamples;
 			sourceTree = "<group>";
 		};
-		17C71A6A26D6E36B00136CA3 /* SupFiles */ = {
+		17C71A6A26D6E36B00136CA3 /* Support */ = {
 			isa = PBXGroup;
 			children = (
 				17675A9426D6D58000B5CC4A /* LaunchScreen.storyboard */,
@@ -148,7 +148,7 @@
 				17675A8926D6D57F00B5CC4A /* AppDelegate.swift */,
 				17675A8B26D6D57F00B5CC4A /* SceneDelegate.swift */,
 			);
-			path = SupFiles;
+			path = Support;
 			sourceTree = "<group>";
 		};
 		17E32FF826DAA427004F5F52 /* Models */ = {
@@ -504,8 +504,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = AX7Z37UN4D;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -530,8 +532,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = AX7Z37UN4D;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
