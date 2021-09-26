@@ -52,14 +52,15 @@ class ExampleViewController: UIViewController {
     }
     
     public func setup() -> ASTimeToucher {
+        let mainViewWidth = view.frame.width
         let secondLine = LTimeToucher(count: 10, animationDuration: 0.1, width: 8, color: nil)
-        let secondArc = ATimeToucher(percentage: 40, lineWidth: 20, radius: 30, startDegree: 0, color: .lightGray, backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1), animationDuration: 6, animationLineSetup: secondLine)
+        let secondArc = ATimeToucher(percentage: 40, lineWidth: 0.05 * mainViewWidth, radius: 0.075 * mainViewWidth, startDegree: 0, color: .lightGray, backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1), animationDuration: 6, animationLineSetup: secondLine)
         
         let minuteLine = LTimeToucher(count: 10, animationDuration: 0.1, width: 8, color: nil)
-        let minuteArc = ATimeToucher(percentage: 40, lineWidth: 30, radius: 60, startDegree: 70, color: .lightGray, backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1),  animationDuration: 4, animationLineSetup: minuteLine)
+        let minuteArc = ATimeToucher(percentage: 40, lineWidth: 0.075 * mainViewWidth, radius: 0.15 * mainViewWidth, startDegree: 70, color: .lightGray, backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1),  animationDuration: 4, animationLineSetup: minuteLine)
         
         let hourLine = LTimeToucher(count: 10, animationDuration: 0.1, width: 8, color: nil)
-        let hourArc = ATimeToucher(percentage: 40, lineWidth: 40, radius: 100, startDegree: 180, color: .lightGray, backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1),  animationDuration: 2, animationLineSetup: hourLine)
+        let hourArc = ATimeToucher(percentage: 40, lineWidth: 0.1 * mainViewWidth, radius: 0.25 * mainViewWidth, startDegree: 180, color: .lightGray, backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1),  animationDuration: 2, animationLineSetup: hourLine)
         
         return ASTimeToucher(secondArc: secondArc, minuteArc: minuteArc, hourArc: hourArc)
     }
@@ -67,8 +68,8 @@ class ExampleViewController: UIViewController {
     func createConstraintsTimerView() {
         timerView.safeAreaLayoutGuide.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         timerView.safeAreaLayoutGuide.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        timerView.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: 400).isActive = true
-        timerView.safeAreaLayoutGuide.heightAnchor.constraint(equalToConstant: 400).isActive = true
+        timerView.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        timerView.safeAreaLayoutGuide.heightAnchor.constraint(equalToConstant: view.frame.width).isActive = true
     }
     
     func createConstraintsTimerLabel() {
