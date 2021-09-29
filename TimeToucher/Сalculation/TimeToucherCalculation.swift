@@ -83,12 +83,9 @@ class TimeToucherCalculation {
       
         switch isTouch {
         case true:
-            let startArcAngle = touchAnimationSetup.arc.startDegree
-            let endArcAngle = touchAnimationSetup.arc.startDegree + 360 * touchAnimationSetup.arc.percentage / 100
+            let centerArcAngle = 360 * touchAnimationSetup.arc.percentage / 200
             
-            let centerArcAngle = (endArcAngle - startArcAngle) / 2
-            
-            let toAngle =  angleToPoint(touchPoint: touchAnimationSetup.point, circleCenter: touchAnimationSetup.circleCenter) - centerArcAngle
+            let toAngle =  angleToPoint(touchPoint: touchAnimationSetup.point, circleCenter: touchAnimationSetup.circleCenter) - centerArcAngle - touchAnimationSetup.arc.startDegree
             return toAngle
         default:
             let currentArcRadians = atan2(currentArcTransform.m12, currentArcTransform.m11)

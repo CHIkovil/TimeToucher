@@ -15,7 +15,7 @@ class ExampleViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.borderWidth = 5
         view.layer.borderColor = UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1).cgColor
-        view.layer.cornerRadius = 200
+        view.layer.cornerRadius = self.view.frame.width / 2
         view.layer.masksToBounds = true
         view.alpha = 0.85
         view.backgroundColor = #colorLiteral(red: 0.978312552, green: 0.9784759879, blue: 0.9782910943, alpha: 1)
