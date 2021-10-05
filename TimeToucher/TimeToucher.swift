@@ -133,9 +133,12 @@ extension TimeToucher{
     func rebootArcAnimation(touchAnimationSetup: TouchAnimationSetup){
         self.layer.sublayers?.removeSubrange(6...)
         
-        let arcSetup = touchAnimationSetup.arc
-        let animation = TimeToucherAnimation.infinityRotateArc(setup: arcSetup)
+        let currentArcTransform = self.layer.sublayers![touchAnimationSetup.arcIndex].presentation()?.transform
+        let toAngle = TimeToucherCalculation.getRotateArcAngle(currentArcTransform: currentArcTransform, touchAnimationSetup: touchAnimationSetup, isTouch: false)
+        let rotationTransform = TimeToucherAnimation.rotateArc(toAngle: toAngle)
+        self.layer.sublayers![touchAnimationSetup.arcIndex].transform = rotationTransform
         
+        let animation = TimeToucherAnimation.infinityRotateArc(setup: touchAnimationSetup.arc)
         self.layer.sublayers![touchAnimationSetup.arcIndex].add(animation, forKey: touchAnimationSetup.arcName)
     }
     
