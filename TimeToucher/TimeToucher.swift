@@ -28,7 +28,7 @@ public final class TimeToucher: UIView {
         for arc in setup.directory{
             let shapeLayers = TimeToucherDrawing.arc(name: arc.key, setup: arc.value, bounds: self.bounds, center: CGPoint(x: self.frame.width / 2, y: self.frame.height / 2))
             
-            let animation = TimeToucherAnimation.infinityRotateArc(setup: arc.value)
+            let animation = TimeToucherAnimation.infinityArcRotate(setup: arc.value)
             shapeLayers.time.add(animation, forKey: arc.key)
             
             self.layer.addSublayer(shapeLayers.background)
@@ -96,7 +96,7 @@ extension TimeToucher{
         
         switch points.count {
         case 3:
-            guard let touchCenter = TimeToucherCalculation.circleCenterTouch3Point(a: points[0], b: points[1], c: points[2]) else {
+            guard let touchCenter = TimeToucherCalculation.circleCenter3TouchPoint(a: points[0], b: points[1], c: points[2]) else {
                 fallthrough
             }
             touchArc = setup.hourArc
@@ -105,7 +105,7 @@ extension TimeToucher{
         case 2:
             touchArc = setup.minuteArc
             touchArcName = "minuteArc"
-            touchPoint = TimeToucherCalculation.circleCenterTouch2Point(a: points[0], b: points[1])
+            touchPoint = TimeToucherCalculation.circleCenter2TouchPoint(a: points[0], b: points[1])
         default:break
         }
         
@@ -134,11 +134,11 @@ extension TimeToucher{
         self.layer.sublayers?.removeSubrange(6...)
         
         let currentArcTransform = self.layer.sublayers![touchAnimationSetup.arcIndex].presentation()?.transform
-        let toAngle = TimeToucherCalculation.getRotateArcAngle(currentArcTransform: currentArcTransform, touchAnimationSetup: touchAnimationSetup, isTouch: false)
+        let toAngle = TimeToucherCalculation.rotateArcAngle(currentArcTransform: currentArcTransform, touchAnimationSetup: touchAnimationSetup, isTouch: false)
         let rotationTransform = TimeToucherAnimation.rotateArc(toAngle: toAngle)
         self.layer.sublayers![touchAnimationSetup.arcIndex].transform = rotationTransform
         
-        let animation = TimeToucherAnimation.infinityRotateArc(setup: touchAnimationSetup.arc)
+        let animation = TimeToucherAnimation.infinityArcRotate(setup: touchAnimationSetup.arc)
         self.layer.sublayers![touchAnimationSetup.arcIndex].add(animation, forKey: touchAnimationSetup.arcName)
     }
     
@@ -149,7 +149,7 @@ extension TimeToucher{
         self.layer.sublayers![touchAnimationSetup.arcIndex].removeAllAnimations()
         let currentArcTransform = self.layer.sublayers![touchAnimationSetup.arcIndex].presentation()?.transform
         
-        let toAngle = TimeToucherCalculation.getRotateArcAngle(currentArcTransform: currentArcTransform, touchAnimationSetup: touchAnimationSetup, isTouch: true)
+        let toAngle = TimeToucherCalculation.rotateArcAngle(currentArcTransform: currentArcTransform, touchAnimationSetup: touchAnimationSetup, isTouch: true)
         
         let rotationTransform = TimeToucherAnimation.rotateArc(toAngle: toAngle)
         self.layer.sublayers![touchAnimationSetup.arcIndex].transform = rotationTransform
@@ -162,10 +162,10 @@ extension TimeToucher{
     3) set line between 2 random points
     4) add show animation for lines*/
     func animateLines(touchAnimationSetup: TouchAnimationSetup){
-        let arrayFrontArc = TimeToucherCalculation.frontTouchArcArray(touchPoint: touchAnimationSetup.point, circleCenter: CGPoint(x: frame.size.width/2, y: frame.size.height/2), circleRadius: touchAnimationSetup.arc.radius + touchAnimationSetup.arc.lineWidth / 2, countPoint: touchAnimationSetup.arc.animationLineSetup.count)
+        let arrayFrontArc = TimeToucherCalculation.frontArcArray(touchPoint: touchAnimationSetup.point, circleCenter: CGPoint(x: frame.size.width/2, y: frame.size.height/2), circleRadius: touchAnimationSetup.arc.radius + touchAnimationSetup.arc.lineWidth / 2, amountPoints: touchAnimationSetup.arc.animationLineSetup.count)
         
         for frontPoint in arrayFrontArc{
-            let random2Points = TimeToucherCalculation.random2PointsOnLine(start: frontPoint, end: touchAnimationSetup.point)
+            let random2Points = TimeToucherCalculation.random2PointOnLine(start: frontPoint, end: touchAnimationSetup.point)
       
             let shapeLayer = TimeToucherDrawing.line(start: random2Points.0, end: random2Points.1, setup: touchAnimationSetup.arc.animationLineSetup)
             

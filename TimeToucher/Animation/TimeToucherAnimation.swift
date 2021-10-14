@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class TimeToucherAnimation {
-    static func infinityRotateArc(setup: ATimeToucher) -> CABasicAnimation{
+    static func infinityArcRotate(setup: ATimeToucher) -> CABasicAnimation{
         let animation = CABasicAnimation(keyPath: "transform.rotation")
         animation.byValue = NSNumber(floatLiteral: Double(CGFloat.pi * 2))
         animation.duration = setup.animationDuration

@@ -10,20 +10,20 @@ import UIKit
 
 class TimeToucherCalculation {
     
-    //MARK: frontTouchArcArray
-    static func frontTouchArcArray(touchPoint: CGPoint, circleCenter: CGPoint, circleRadius: CGFloat, countPoint: Int) -> [CGPoint]{
-        let distanceBetweenCirclesCenter = touchPoint.distance(to: circleCenter)
+    //MARK: frontArcArray
+    static func frontArcArray(touchPoint: CGPoint, circleCenter: CGPoint, circleRadius: CGFloat, amountPoints: Int) -> [CGPoint]{
+        let distanceBetween2Point = touchPoint.distance(to: circleCenter)
         
-        let distanceToCircleTangencyPoint = distanceToCircleTangencyPoint(distanceBetweenCirclesCenter:distanceBetweenCirclesCenter, circleRadius: circleRadius)
+        let distanceToCircleTangencyPoint = distanceToCircle2TangencyPoint(distanceBetweenCirclesCenter:distanceBetween2Point, circleRadius: circleRadius)
         
-        let tangency2PointArray = tangency2PointArray(distanceBetweenCirclesCenter: distanceBetweenCirclesCenter, timeCircleRadius: circleRadius, touchCircleRadius: distanceToCircleTangencyPoint, touchPoint: touchPoint, timeCircleCenter: circleCenter)
+        let array2TangencyPoint = tangency2PointArray(distanceBetweenCirclesCenter: distanceBetween2Point, timeCircleRadius: circleRadius, touchCircleRadius: distanceToCircleTangencyPoint, touchPoint: touchPoint, timeCircleCenter: circleCenter)
         
-        let tangencyAngleArray = tangency2PointArray.map({angleToPoint(touchPoint: $0, circleCenter: circleCenter)})
-        let anglesTangency2Point = (tangencyAngleArray[0],tangencyAngleArray[1])
+        let array2TangencyAngle = array2TangencyPoint.map({angleToPoint(touchPoint: $0, circleCenter: circleCenter)})
+        let angles2TangencyPoint = (array2TangencyAngle[0],array2TangencyAngle[1])
         
-        let arrayFrontArc = frontArcArray(anglesTangency2Point: anglesTangency2Point, countPoint: countPoint, circleRadius: circleRadius, circleCenter: circleCenter)
+        let arcArray = arcArray(angles2TangencyPoint: angles2TangencyPoint, amountPoints: amountPoints, circleRadius: circleRadius, circleCenter: circleCenter)
         
-        return arrayFrontArc
+        return arcArray
     }
     
     //MARK: checkCircleContainsPoint
@@ -31,8 +31,8 @@ class TimeToucherCalculation {
         return sqrt(pow(point.x - circleCenter.x, 2) + pow(point.y - circleCenter.y, 2)) < circleRadius
     }
     
-    //MARK: circleCenterTouch3Point
-    static func circleCenterTouch3Point(a: CGPoint, b: CGPoint, c: CGPoint) -> CGPoint? {
+    //MARK: circleCenter3TouchPoint
+    static func circleCenter3TouchPoint(a: CGPoint, b: CGPoint, c: CGPoint) -> CGPoint? {
         let d1 = CGPoint(x: b.y - a.y, y: a.x - b.x)
         let d2 = CGPoint(x: c.y - a.y, y: a.x - c.x)
         let k: CGFloat = d2.x * d1.y - d2.y * d1.x
@@ -47,22 +47,22 @@ class TimeToucherCalculation {
         return center
     }
     
-    //MARK: circleCenterTouch2Point
-    static func circleCenterTouch2Point(a: CGPoint, b: CGPoint) -> CGPoint {
+    //MARK: circleCenter2TouchPoint
+    static func circleCenter2TouchPoint(a: CGPoint, b: CGPoint) -> CGPoint {
         return CGPoint(x: (a.x + b.x) / 2, y: (a.y + b.y) / 2)
     }
     
-    //MARK: random2PointsOnLine
-    static func random2PointsOnLine(start: CGPoint, end: CGPoint) -> (CGPoint, CGPoint){
+    //MARK: random2PointOnLine
+    static func random2PointOnLine(start: CGPoint, end: CGPoint) -> (CGPoint, CGPoint){
         let a = (start.y - end.y)/(start.x - end.x)
         let b = start.y - a * start.x
         
-        let random2Numbers = [CGFloat](repeating: CGFloat(), count: 2).map { _ in
+        let random2Number = [CGFloat](repeating: CGFloat(), count: 2).map { _ in
             return  start.x < end.x ? CGFloat.random(in: start.x...end.x) : CGFloat.random(in: end.x...start.x)
         }
   
-        let random2Points = random2Numbers.map {CGPoint(x: $0, y: a * $0 + b)}
-        return (random2Points[0], random2Points[1])
+        let random2Point = random2Number.map {CGPoint(x: $0, y: a * $0 + b)}
+        return (random2Point[0], random2Point[1])
     }
     
     //MARK: angleToPoint
@@ -75,8 +75,8 @@ class TimeToucherCalculation {
          return degree
      }
     
-    //MARK: getRotateArcAngle
-    static func getRotateArcAngle(currentArcTransform: CATransform3D?, touchAnimationSetup: TouchAnimationSetup, isTouch: Bool) -> CGFloat {
+    //MARK: rotateArcAngle
+    static func rotateArcAngle(currentArcTransform: CATransform3D?, touchAnimationSetup: TouchAnimationSetup, isTouch: Bool) -> CGFloat {
         guard let currentArcTransform = currentArcTransform else {
             return 0
         }
@@ -88,8 +88,8 @@ class TimeToucherCalculation {
             let toAngle =  angleToPoint(touchPoint: touchAnimationSetup.point, circleCenter: touchAnimationSetup.circleCenter) - centerArcAngle - touchAnimationSetup.arc.startDegree
             return toAngle
         default:
-            let currentArcRadians = atan2(currentArcTransform.m12, currentArcTransform.m11)
-            return currentArcRadians * (180 / .pi)
+            let currentArcAngle = atan2(currentArcTransform.m12, currentArcTransform.m11)
+            return currentArcAngle * (180 / .pi)
         }
     }
 }
@@ -97,9 +97,8 @@ class TimeToucherCalculation {
 //MARK: extension
 private extension TimeToucherCalculation {
     
-    
-    //MARK: distanceToCircleTangencyPoint
-    static func distanceToCircleTangencyPoint(distanceBetweenCirclesCenter: CGFloat, circleRadius: CGFloat) -> CGFloat {
+    //MARK: distanceToCircle2TangencyPoint
+    static func distanceToCircle2TangencyPoint(distanceBetweenCirclesCenter: CGFloat, circleRadius: CGFloat) -> CGFloat {
         return sqrt(pow(distanceBetweenCirclesCenter, 2) - pow(circleRadius, 2))
     }
     
@@ -111,32 +110,32 @@ private extension TimeToucherCalculation {
         let lineOfIntersectionPointX = timeCircleCenter.x + distanceToLineOfIntersection * (touchPoint.x - timeCircleCenter.x) / distanceBetweenCirclesCenter
         let lineOfIntersectionPointY = timeCircleCenter.y + distanceToLineOfIntersection * (touchPoint.y - timeCircleCenter.y) / distanceBetweenCirclesCenter
         
-        let startTangencyPointX = lineOfIntersectionPointX + halfLineOfIntersection * (touchPoint.y - timeCircleCenter.y) / distanceBetweenCirclesCenter
-        let startTangencyPointY = lineOfIntersectionPointY - halfLineOfIntersection * (touchPoint.x - timeCircleCenter.x) / distanceBetweenCirclesCenter
+        let firstTangencyPointX = lineOfIntersectionPointX + halfLineOfIntersection * (touchPoint.y - timeCircleCenter.y) / distanceBetweenCirclesCenter
+        let firstTangencyPointY = lineOfIntersectionPointY - halfLineOfIntersection * (touchPoint.x - timeCircleCenter.x) / distanceBetweenCirclesCenter
         
-        let startTangencyPoint = CGPoint(x: startTangencyPointX, y: startTangencyPointY)
+        let firstTangencyPoint = CGPoint(x: firstTangencyPointX, y: firstTangencyPointY)
         
-        let endTangencyPointX = lineOfIntersectionPointX - halfLineOfIntersection * (touchPoint.y - timeCircleCenter.y) / distanceBetweenCirclesCenter
-        let endTangencyPointY = lineOfIntersectionPointY + halfLineOfIntersection * (touchPoint.x - timeCircleCenter.x) / distanceBetweenCirclesCenter
+        let secondTangencyPointX = lineOfIntersectionPointX - halfLineOfIntersection * (touchPoint.y - timeCircleCenter.y) / distanceBetweenCirclesCenter
+        let secondTangencyPointY = lineOfIntersectionPointY + halfLineOfIntersection * (touchPoint.x - timeCircleCenter.x) / distanceBetweenCirclesCenter
         
-        let endTangencyPoint = CGPoint(x: endTangencyPointX, y: endTangencyPointY)
+        let secondTangencyPoint = CGPoint(x: secondTangencyPointX, y: secondTangencyPointY)
         
-        return [startTangencyPoint, endTangencyPoint]
+        return [firstTangencyPoint, secondTangencyPoint]
     }
     
-    //MARK: frontArcArray
-    static func frontArcArray(anglesTangency2Point: (start: CGFloat, end: CGFloat), countPoint: Int, circleRadius: CGFloat, circleCenter: CGPoint) -> [CGPoint] {
+    //MARK: arcArray
+    static func arcArray(angles2TangencyPoint: (start: CGFloat, end: CGFloat), amountPoints: Int, circleRadius: CGFloat, circleCenter: CGPoint) -> [CGPoint] {
         
-        let startAngle = anglesTangency2Point.start
-        let endAngle = anglesTangency2Point.end < anglesTangency2Point.start ? 360 + anglesTangency2Point.end : anglesTangency2Point.end
+        let startAngle = angles2TangencyPoint.start
+        let endAngle = angles2TangencyPoint.end < angles2TangencyPoint.start ? 360 + angles2TangencyPoint.end : angles2TangencyPoint.end
         
-        let angleStep = ((endAngle - startAngle) / CGFloat(countPoint + 1)).rounded(.down)
+        let angleStep = ((endAngle - startAngle) / CGFloat(amountPoints + 1)).rounded(.down)
        
         var points: [CGPoint] = []
         var angle = startAngle + angleStep
         var count = 0
         
-        while angle < endAngle && count < countPoint{
+        while angle < endAngle && count < amountPoints{
             let item = angle
             angle = item >= 360 ? item - 360 : item
             

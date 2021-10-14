@@ -162,8 +162,8 @@ import XCTest
         timeToucher.animateArcs(setup: setup)
         let touchAnimationSetupFor3Touches = timeToucher.touchAnimationSetup(points: points3, setup: setup)
         
-        let _ = TimeToucherCalculation.getRotateArcAngle(currentArcTransform: CATransform3D(), touchAnimationSetup: touchAnimationSetupFor3Touches, isTouch: true)
-        let _ = TimeToucherCalculation.getRotateArcAngle(currentArcTransform: transform, touchAnimationSetup: touchAnimationSetupFor3Touches, isTouch: false)
+        let _ = TimeToucherCalculation.rotateArcAngle(currentArcTransform: CATransform3D(), touchAnimationSetup: touchAnimationSetupFor3Touches, isTouch: true)
+        let _ = TimeToucherCalculation.rotateArcAngle(currentArcTransform: transform, touchAnimationSetup: touchAnimationSetupFor3Touches, isTouch: false)
     }
 
     func testPerformanceExample() throws {

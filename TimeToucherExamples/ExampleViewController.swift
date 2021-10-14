@@ -15,7 +15,7 @@ class ExampleViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.borderWidth = 5
         view.layer.borderColor = UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1).cgColor
-        view.layer.cornerRadius = self.view.frame.width / 2
+        view.layer.cornerRadius = (self.view.frame.width - 50) / 2
         view.layer.masksToBounds = true
         view.alpha = 0.85
         view.backgroundColor = #colorLiteral(red: 0.978312552, green: 0.9784759879, blue: 0.9782910943, alpha: 1)
@@ -52,7 +52,7 @@ class ExampleViewController: UIViewController {
     }
     
     public func setup() -> ASTimeToucher {
-        let mainViewWidth = view.frame.width
+        let mainViewWidth = view.frame.width - 50
         let secondLine = LTimeToucher(count: 10, animationDuration: 0.1, width: 8, color: nil)
         let secondArc = ATimeToucher(percentage: 40, lineWidth: 0.05 * mainViewWidth, radius: 0.075 * mainViewWidth, startDegree: 0, color: .lightGray, backgroundColor: UIColor(red: 220 / 255, green: 220 / 255, blue: 220 / 255, alpha: 1), animationDuration: 6, animationLineSetup: secondLine)
         
@@ -68,8 +68,8 @@ class ExampleViewController: UIViewController {
     func createConstraintsTimerView() {
         timerView.safeAreaLayoutGuide.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         timerView.safeAreaLayoutGuide.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        timerView.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        timerView.safeAreaLayoutGuide.heightAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        timerView.safeAreaLayoutGuide.widthAnchor.constraint(equalToConstant: view.frame.width - 50).isActive = true
+        timerView.safeAreaLayoutGuide.heightAnchor.constraint(equalToConstant: view.frame.width - 50).isActive = true
     }
     
     func createConstraintsTimerLabel() {
