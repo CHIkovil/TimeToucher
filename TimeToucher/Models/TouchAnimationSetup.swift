@@ -14,4 +14,5 @@ struct TouchAnimationSetup {
     let arcName: String
     let circleCenter: CGPoint
     let arcIndex: Int
+    let pointsCount: Int
 }
