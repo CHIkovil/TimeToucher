@@ -20,6 +20,7 @@
 		17675A8E26D6D57F00B5CC4A /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17675A8D26D6D57F00B5CC4A /* ExampleViewController.swift */; };
 		17675A9326D6D58000B5CC4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17675A9226D6D58000B5CC4A /* Assets.xcassets */; };
 		17675A9626D6D58000B5CC4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17675A9426D6D58000B5CC4A /* LaunchScreen.storyboard */; };
+		17C0F40D27FB70BA00E1355F /* app.gif in Resources */ = {isa = PBXBuildFile; fileRef = 17C0F40C27FB70BA00E1355F /* app.gif */; };
 		17C8B1712725DD44002E087A /* TimeToucher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17675A6926D6D55000B5CC4A /* TimeToucher.framework */; platformFilter = ios; };
 		17C8B1722725DD44002E087A /* TimeToucher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 17675A6926D6D55000B5CC4A /* TimeToucher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		17E3300326DAC8A1004F5F52 /* TimeToucherCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E3300226DAC8A1004F5F52 /* TimeToucherCalculation.swift */; };
@@ -78,6 +79,7 @@
 		17675A9226D6D58000B5CC4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		17675A9526D6D58000B5CC4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		17675A9726D6D58000B5CC4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17C0F40C27FB70BA00E1355F /* app.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = app.gif; sourceTree = "<group>"; };
 		17E3300226DAC8A1004F5F52 /* TimeToucherCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToucherCalculation.swift; sourceTree = "<group>"; };
 		17E3300626DB08D6004F5F52 /* LTimeToucher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LTimeToucher.swift; sourceTree = "<group>"; };
 		17F8FB2826F100480016226D /* TimeToucherDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToucherDrawing.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 		17675A5F26D6D55000B5CC4A = {
 			isa = PBXGroup;
 			children = (
+				17C0F40B27FB708800E1355F /* Example */,
 				17675A6B26D6D55000B5CC4A /* TimeToucher */,
 				17675A7626D6D55000B5CC4A /* TimeToucherTests */,
 				17675A8826D6D57F00B5CC4A /* TimeToucherExamples */,
@@ -163,6 +166,14 @@
 				17675A9726D6D58000B5CC4A /* Info.plist */,
 			);
 			path = TimeToucherExamples;
+			sourceTree = "<group>";
+		};
+		17C0F40B27FB708800E1355F /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				17C0F40C27FB70BA00E1355F /* app.gif */,
+			);
+			path = Example;
 			sourceTree = "<group>";
 		};
 		17C71A6A26D6E36B00136CA3 /* Support */ = {
@@ -334,6 +345,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17C0F40D27FB70BA00E1355F /* app.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
