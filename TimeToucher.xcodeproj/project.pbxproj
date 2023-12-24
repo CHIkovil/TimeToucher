@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,6 +20,9 @@
 		17675A8E26D6D57F00B5CC4A /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17675A8D26D6D57F00B5CC4A /* ExampleViewController.swift */; };
 		17675A9326D6D58000B5CC4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17675A9226D6D58000B5CC4A /* Assets.xcassets */; };
 		17675A9626D6D58000B5CC4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17675A9426D6D58000B5CC4A /* LaunchScreen.storyboard */; };
+		17C0F40D27FB70BA00E1355F /* app.gif in Resources */ = {isa = PBXBuildFile; fileRef = 17C0F40C27FB70BA00E1355F /* app.gif */; };
+		17C8B1712725DD44002E087A /* TimeToucher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17675A6926D6D55000B5CC4A /* TimeToucher.framework */; platformFilter = ios; };
+		17C8B1722725DD44002E087A /* TimeToucher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 17675A6926D6D55000B5CC4A /* TimeToucher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		17E3300326DAC8A1004F5F52 /* TimeToucherCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E3300226DAC8A1004F5F52 /* TimeToucherCalculation.swift */; };
 		17E3300726DB08D6004F5F52 /* LTimeToucher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E3300626DB08D6004F5F52 /* LTimeToucher.swift */; };
 		17F8FB2926F100480016226D /* TimeToucherDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F8FB2826F100480016226D /* TimeToucherDrawing.swift */; };
@@ -34,7 +37,28 @@
 			remoteGlobalIDString = 17675A6826D6D55000B5CC4A;
 			remoteInfo = TimeToucher;
 		};
+		17C8B1732725DD44002E087A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 17675A6026D6D55000B5CC4A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 17675A6826D6D55000B5CC4A;
+			remoteInfo = TimeToucher;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		17C8B1752725DD44002E087A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				17C8B1722725DD44002E087A /* TimeToucher.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1710283C26EBAC6D00C04259 /* TimeFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormat.swift; sourceTree = "<group>"; };
@@ -55,6 +79,7 @@
 		17675A9226D6D58000B5CC4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		17675A9526D6D58000B5CC4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		17675A9726D6D58000B5CC4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17C0F40C27FB70BA00E1355F /* app.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = app.gif; sourceTree = "<group>"; };
 		17E3300226DAC8A1004F5F52 /* TimeToucherCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToucherCalculation.swift; sourceTree = "<group>"; };
 		17E3300626DB08D6004F5F52 /* LTimeToucher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LTimeToucher.swift; sourceTree = "<group>"; };
 		17F8FB2826F100480016226D /* TimeToucherDrawing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeToucherDrawing.swift; sourceTree = "<group>"; };
@@ -81,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17C8B1712725DD44002E087A /* TimeToucher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,10 +116,12 @@
 		17675A5F26D6D55000B5CC4A = {
 			isa = PBXGroup;
 			children = (
+				17C0F40B27FB708800E1355F /* Example */,
 				17675A6B26D6D55000B5CC4A /* TimeToucher */,
 				17675A7626D6D55000B5CC4A /* TimeToucherTests */,
 				17675A8826D6D57F00B5CC4A /* TimeToucherExamples */,
 				17675A6A26D6D55000B5CC4A /* Products */,
+				17C8B1702725DD44002E087A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -140,6 +168,14 @@
 			path = TimeToucherExamples;
 			sourceTree = "<group>";
 		};
+		17C0F40B27FB708800E1355F /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				17C0F40C27FB70BA00E1355F /* app.gif */,
+			);
+			path = Example;
+			sourceTree = "<group>";
+		};
 		17C71A6A26D6E36B00136CA3 /* Support */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +185,13 @@
 				17675A8B26D6D57F00B5CC4A /* SceneDelegate.swift */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		17C8B1702725DD44002E087A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		17E32FF826DAA427004F5F52 /* Models */ = {
@@ -244,10 +287,12 @@
 				17675A8326D6D57F00B5CC4A /* Sources */,
 				17675A8426D6D57F00B5CC4A /* Frameworks */,
 				17675A8526D6D57F00B5CC4A /* Resources */,
+				17C8B1752725DD44002E087A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				17C8B1742725DD44002E087A /* PBXTargetDependency */,
 			);
 			name = TimeToucherExamples;
 			productName = TimeToucherExamples;
@@ -300,6 +345,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17C0F40D27FB70BA00E1355F /* app.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +409,12 @@
 			isa = PBXTargetDependency;
 			target = 17675A6826D6D55000B5CC4A /* TimeToucher */;
 			targetProxy = 17675A7426D6D55000B5CC4A /* PBXContainerItemProxy */;
+		};
+		17C8B1742725DD44002E087A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 17675A6826D6D55000B5CC4A /* TimeToucher */;
+			targetProxy = 17C8B1732725DD44002E087A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -430,7 +482,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -488,7 +540,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -597,7 +649,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = AX7Z37UN4D;
 				INFOPLIST_FILE = TimeToucherExamples/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -605,7 +659,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = CHIkovil.TimeToucherExamples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -615,7 +669,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = AX7Z37UN4D;
 				INFOPLIST_FILE = TimeToucherExamples/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -623,7 +679,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = CHIkovil.TimeToucherExamples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

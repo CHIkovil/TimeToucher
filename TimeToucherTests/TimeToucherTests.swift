@@ -67,15 +67,29 @@ import XCTest
         timeToucher.touchesCancelled(touches, with: nil)
         timeToucher.touchesEnded(touches, with: nil)
     }
+      
+      func testSwitchTouchesIfRebootCurrentTouchAnimationSetup() {
+          // given
+          let currentTouchAnimationSetup = TouchAnimationSetup(point: CGPoint(), arc: setup.secondArc, arcName: "", circleCenter: CGPoint(), arcIndex: 0, pointsCount: 1)
+    
+          // when
+          timeToucher.animateArcs(setup: setup)
+          timeToucher.currentTouchAnimationSetup = currentTouchAnimationSetup
+          timeToucher.switchTouches(points: nil)
+          
+          // then
+          XCTAssertTrue(timeToucher.currentTouchAnimationSetup == nil, "not nil currentTouchAnimationSetup")
+      }
     
     func testSwitchTouchesIf1TouchInBoundsForTouches() {
         // given
         let point = CGPoint(x: 10 , y: 10)
-        timeToucher.bounds = CGRect(x: 0, y: 0, width: 400, height: 400)
+        let bounds = CGRect(x: 0, y: 0, width: 400, height: 400)
         
         // when
+        timeToucher.bounds = bounds
         timeToucher.animateArcs(setup: setup)
-        timeToucher.switchTouches(isReboot: false, points: [point])
+        timeToucher.switchTouches(points: [point])
         
         // then
         XCTAssertTrue(timeToucher.timeFormat.seconds != 0, "point(one touch) in bounds for touches but seconds timer not moved")
@@ -85,11 +99,13 @@ import XCTest
         // given
         let centerPoint = CGPoint(x: 200, y: 200)
         let outPoint = CGPoint(x: -10, y: -10)
+        let bounds = CGRect(x: 0, y: 0, width: 400, height: 400)
         
         // when
+        timeToucher.bounds = bounds
         timeToucher.animateArcs(setup: setup)
-        timeToucher.switchTouches(isReboot: false, points: [centerPoint])
-        timeToucher.switchTouches(isReboot: false, points: [outPoint])
+        timeToucher.switchTouches(points: [centerPoint])
+        timeToucher.switchTouches(points: [outPoint])
         
         // then
         XCTAssertTrue(timeToucher.timeFormat.seconds == 0, "point(one touch) out bounds for touches but seconds timer moved")
@@ -100,7 +116,7 @@ import XCTest
         let arcDirectory = setup.directory
         for name in arcDirectory.keys {
             // given
-            let touchAnimationSetup = TouchAnimationSetup(point: CGPoint(x: 390, y: 10), arc: arcDirectory[name]!, arcName: name, circleCenter: CGPoint(x: 200, y: 200), arcIndex: 1)
+            let touchAnimationSetup = TouchAnimationSetup(point: CGPoint(x: 390, y: 10), arc: arcDirectory[name]!, arcName: name, circleCenter: CGPoint(x: 200, y: 200), arcIndex: 1, pointsCount: 1)
             
             // when
             timeToucher.setTime(touchAnimationSetup: touchAnimationSetup)
